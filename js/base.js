@@ -70,6 +70,7 @@ App.create_task_element = function (task) {
   let text = App.create("input", "task_text")
   text.type = "text"
   text.value = task.text
+  text.placeholder = "Write something here"
 
   App.ev(text, "blur", function () {
     let value = this.value.trim()
