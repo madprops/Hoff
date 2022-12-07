@@ -120,6 +120,12 @@ App.setup_mouse = function () {
     App.clean_tasks()
   })
 
+  let remove_all_button = App.el("#remove_all_button")
+
+  App.ev(remove_all_button, "click", function () {
+    App.remove_all_tasks()
+  })
+
   let container = App.el("#tasks")
 
   App.ev(container, "click", function (e) {
@@ -205,9 +211,11 @@ App.save_tasks = function () {
 }
 
 App.clean_tasks = function () {
-  App.tasks = App.tasks.filter(x => !x.done)
-  App.save_tasks()
-  App.show_tasks()
+  if (confirm("Remove all done tasks?")) {
+    App.tasks = App.tasks.filter(x => !x.done)
+    App.save_tasks()
+    App.show_tasks()
+  }
 }
 
 App.get_random_int = function (min, max, exclude = undefined) {
@@ -241,4 +249,12 @@ App.get_random_string = function (n) {
 App.remove_task = function (id) {
   App.tasks = App.tasks.filter(x => x.id !== id)
   App.save_tasks()
+}
+
+App.remove_all_tasks = function () {
+  if (confirm("Remove all tasks?")) {
+    App.tasks = []
+    App.save_tasks()
+    App.show_tasks()
+  }
 }
