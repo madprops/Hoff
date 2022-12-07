@@ -25,8 +25,8 @@ body, html {
   min-width: 1.5rem;
   border-width: 0;
   text-align: center;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   user-select: none;
@@ -42,8 +42,10 @@ body, html {
   font-size: 1rem;
   width: 18rem;
   margin-bottom: 1rem;
-  padding: 0.25rem;
+  padding: 0.2rem;
   text-align: center;
+  outline: none;
+  border: none;
 }
 
 #tasks {
