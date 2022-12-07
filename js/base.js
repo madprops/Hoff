@@ -46,7 +46,7 @@ App.create_task_element = function (task) {
 
   //
   let move = App.create("div", "task_move")
-  move.title = "Move a task vertically"
+  move.title = "Move task vertically"
   let move_icon = App.create("object", "icon")
   move_icon.type = "image/svg+xml"
   move_icon.data = "img/move.svg"
@@ -85,7 +85,7 @@ App.create_task_element = function (task) {
 
   //
   let remove = App.create("div", "task_remove")
-  remove.title = "Remove a task"
+  remove.title = "Remove task"
   let remove_icon = App.create("object", "icon")
   remove_icon.type = "image/svg+xml"
   remove_icon.data = "img/remove.svg"
