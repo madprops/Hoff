@@ -147,6 +147,10 @@ App.setup_mouse = function () {
     App.remove_all_tasks()
   })
 
+  App.ev(info_button, "click", function () {
+    App.show_info()
+  })
+
   let container = App.el("#tasks")
 
   App.ev(container, "click", function (e) {
@@ -349,4 +353,10 @@ App.reorder_tasks = function () {
 
   App.tasks.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
   App.save_tasks()
+}
+
+App.show_info = function () {
+  let s = "Tasks are saved in local storage.\n"
+  s += "No network requests are made."
+  alert(s)
 }
