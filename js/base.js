@@ -43,12 +43,29 @@ App.show_tasks = function () {
 
 App.create_task_element = function (task) {
   let el = App.create("div", "task")
+
+  //
+  let move = App.create("div", "task_move")
+  move.title = "Move a task vertically"
+  let move_icon = App.create("object", "icon")
+  move_icon.type = "image/svg+xml"
+  move_icon.data = "img/move.svg"
+  move.draggable = true
+
+  App.ev(move, "dragstart", function (e) {
+    App.on_dragstart(e)
+  })
+
+  move.append(move_icon)
+  el.append(move)  
     
+  //
   let check = App.create("input", "task_check")
   check.type = "checkbox"
   check.checked = task.done
   el.append(check)
   
+  //
   let text = App.create("input", "task_text")
   text.type = "text"
   text.value = task.text
@@ -66,25 +83,14 @@ App.create_task_element = function (task) {
 
   el.append(text)
 
+  //
   let remove = App.create("div", "task_remove")
+  remove.title = "Remove a task"
   let remove_icon = App.create("object", "icon")
   remove_icon.type = "image/svg+xml"
   remove_icon.data = "img/remove.svg"
   remove.append(remove_icon)
   el.append(remove)
-
-  let move = App.create("div", "task_move")
-  let move_icon = App.create("object", "icon")
-  move_icon.type = "image/svg+xml"
-  move_icon.data = "img/move.svg"
-  move.draggable = true
-
-  App.ev(move, "dragstart", function (e) {
-    App.on_dragstart(e)
-  })
-
-  move.append(move_icon)
-  el.append(move)
 
   el.dataset.id = task.id
   return el
@@ -158,13 +164,15 @@ App.setup_mouse = function () {
     }
   })
 
-  App.ev(container, "dragover", function (e) {
+  let main = App.el("#main")
+
+  App.ev(main, "dragover", function (e) {
     App.on_dragover(e)
     e.preventDefault()
     return false
   })
 
-  App.ev(container, "dragend", function (e) {
+  App.ev(main, "dragend", function (e) {
     App.on_dragend(e)
   })
 }
