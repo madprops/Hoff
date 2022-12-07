@@ -66,9 +66,9 @@ body, html {
 
 .task_text {
   display: table-cell;
-  font-size: 1.2rem;
-  min-width: 55vw;
-  max-width: 55vw;
+  font-size: 1rem;
+  min-width: 25rem;
+  max-width: 25rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
