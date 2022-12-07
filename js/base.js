@@ -216,10 +216,12 @@ App.remove_done_tasks = function () {
 }
 
 App.remove_all_tasks = function () {
-  if (confirm(`Remove all tasks? (${App.tasks.length})`)) {
-    App.tasks = []
-    App.save_tasks()
-    App.show_tasks()
+  if (App.tasks.length > 0) {
+    if (confirm(`Remove all tasks? (${App.tasks.length})`)) {
+      App.tasks = []
+      App.save_tasks()
+      App.show_tasks()
+    }
   }
 }
 
