@@ -87,6 +87,7 @@ body, html {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   cursor: pointer;
+  user-select: none;
 }
 
 .task_remove:hover {

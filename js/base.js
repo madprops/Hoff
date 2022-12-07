@@ -142,10 +142,17 @@ App.setup_mouse = function () {
 
 App.setup_keyboard = function () {
   App.ev(document, "keydown", function (e) {
-    App.focus_input()
+    let input = App.el("#input")
+    let active = document.activeElement
+    
+    if (active.tagName.toLowerCase() !== "input") {
+      App.focus_input()
+    }
 
     if (e.key === "Enter") {
-      App.add_task()
+      if (active === input) {
+        App.add_task()
+      }
     }
   })
 }
