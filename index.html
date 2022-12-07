@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hoff</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/base.js"></script>
+
+    <script>
+      window.onload = function () {
+        App.init()
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id="main">
+      <input type="text" id="input" placeholder="Write a short description">
+      
+      <div class="flex_row_center gap_2">
+        <div id="add_button" class="button">Add Task</div>
+        <div id="clean_button" class="button">Clean Tasks</div>
+      </div>
+
+      <div id="tasks"></div>
+    </div>
+  </body>
+</html>
