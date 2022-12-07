@@ -204,15 +204,19 @@ App.save_tasks = function () {
 }
 
 App.remove_done_tasks = function () {
-  if (confirm("Remove done tasks?")) {
-    App.tasks = App.tasks.filter(x => !x.done)
-    App.save_tasks()
-    App.show_tasks()
+  let done = App.get_done_tasks()
+
+  if (done.length > 0) {
+    if (confirm(`Remove done tasks? (${done.length})`)) {
+      App.tasks = App.tasks.filter(x => !x.done)
+      App.save_tasks()
+      App.show_tasks()
+    }
   }
 }
 
 App.remove_all_tasks = function () {
-  if (confirm("Remove all tasks?")) {
+  if (confirm(`Remove all tasks? (${App.tasks.length})`)) {
     App.tasks = []
     App.save_tasks()
     App.show_tasks()
@@ -250,4 +254,16 @@ App.get_random_string = function (n) {
 App.remove_task = function (id) {
   App.tasks = App.tasks.filter(x => x.id !== id)
   App.save_tasks()
+}
+
+App.get_done_tasks = function () {
+  let done = []
+
+  for (let task of App.tasks) {
+    if (task.done) {
+      done.push(task)
+    }
+  }
+
+  return done
 }
