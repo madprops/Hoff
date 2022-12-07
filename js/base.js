@@ -42,7 +42,14 @@ App.show_tasks = function () {
 }
 
 App.create_task_element = function (task) {
-  let el = App.create("div", "task")
+  let el = App.create("div", "task") 
+    
+  //
+  let check = App.create("input", "task_check")
+  check.title = "Mark as done"
+  check.type = "checkbox"
+  check.checked = task.done
+  el.append(check)
 
   //
   let move = App.create("div", "task_move")
@@ -57,13 +64,7 @@ App.create_task_element = function (task) {
   })
 
   move.append(move_icon)
-  el.append(move)  
-    
-  //
-  let check = App.create("input", "task_check")
-  check.type = "checkbox"
-  check.checked = task.done
-  el.append(check)
+  el.append(move)   
   
   //
   let text = App.create("input", "task_text")
