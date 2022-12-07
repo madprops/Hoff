@@ -66,9 +66,25 @@ App.create_task_element = function (task) {
 
   el.append(text)
 
-  let remove = App.create("div", "task_remove button")
-  remove.textContent = "Remove"
+  let remove = App.create("div", "task_remove")
+  let remove_icon = App.create("object", "icon")
+  remove_icon.type = "image/svg+xml"
+  remove_icon.data = "img/remove.svg"
+  remove.append(remove_icon)
   el.append(remove)
+
+  let move = App.create("div", "task_move")
+  let move_icon = App.create("object", "icon")
+  move_icon.type = "image/svg+xml"
+  move_icon.data = "img/move.svg"
+  move.draggable = true
+
+  App.ev(move, "dragstart", function (e) {
+    App.on_dragstart(e)
+  })
+
+  move.append(move_icon)
+  el.append(move)
 
   el.dataset.id = task.id
   return el
@@ -140,6 +156,16 @@ App.setup_mouse = function () {
         App.remove_task(id)
       }
     }
+  })
+
+  App.ev(container, "dragover", function (e) {
+    App.on_dragover(e)
+    e.preventDefault()
+    return false
+  })
+
+  App.ev(container, "dragend", function (e) {
+    App.on_dragend(e)
   })
 }
 
@@ -268,4 +294,49 @@ App.get_done_tasks = function () {
   }
 
   return done
+}
+
+App.on_dragstart = function (e) {
+  App.drag_y = e.clientY
+  App.drag_element = e.target.closest(".task")
+  e.dataTransfer.setDragImage(new Image(), 0, 0)
+}
+
+App.on_dragover = function (e) {
+  if (!e.target.closest(".task")) {
+    return
+  }
+
+  let direction = e.clientY > App.drag_y ? "down" : "up"
+  let el = e.target.closest(".task")
+
+  if (el === App.drag_element) {
+    e.preventDefault()
+    return false
+  }
+  
+  App.drag_y = e.clientY
+
+  if (direction === "down") {
+    el.after(App.drag_element)
+  } else {
+    el.before(App.drag_element)
+  }
+}
+
+App.on_dragend = function (e) {
+  App.reorder_tasks()
+}
+
+App.reorder_tasks = function () {
+  let ids = []
+  let els = App.els(".task")
+  els.reverse()
+
+  for (let el of els) {
+    ids.push(el.dataset.id)
+  }
+
+  App.tasks.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
+  App.save_tasks()
 }
