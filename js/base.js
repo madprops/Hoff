@@ -56,14 +56,11 @@ App.create_task_element = function (task) {
   App.ev(text, "blur", function () {
     let value = this.value.trim()
     this.value = value
+    let tsk = App.get_task(task.id)
 
-    if (value) {
-      let tsk = App.get_task(task.id)
-
-      if (tsk.text !== value) {
-        tsk.text = value
-        App.save_tasks()
-      }
+    if (tsk.text !== value) {
+      tsk.text = value
+      App.save_tasks()
     }
   })
 
@@ -177,10 +174,6 @@ App.add_task = function () {
   let value = input.value.trim()
   input.value = ""
   App.focus_input()
-
-  if (!value) {
-    return
-  }
 
   let d = Date.now()
   let s = App.get_random_string(5)
