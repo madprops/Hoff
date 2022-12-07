@@ -75,9 +75,6 @@ body, html {
   font-size: 1rem;
   min-width: 25rem;
   max-width: 25rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   background-color: rgb(111, 111, 138);
   outline: none;
   border: none;
