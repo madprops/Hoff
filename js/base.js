@@ -114,10 +114,10 @@ App.setup_mouse = function () {
     App.add_task()
   })
 
-  let clean_button = App.el("#clean_button")
+  let remove_done_button = App.el("#remove_done_button")
 
-  App.ev(clean_button, "click", function () {
-    App.clean_tasks()
+  App.ev(remove_done_button, "click", function () {
+    App.remove_done_tasks()
   })
 
   let remove_all_button = App.el("#remove_all_button")
@@ -210,9 +210,17 @@ App.save_tasks = function () {
   App.save_local_storage(App.ls_tasks, App.tasks)
 }
 
-App.clean_tasks = function () {
-  if (confirm("Remove all done tasks?")) {
+App.remove_done_tasks = function () {
+  if (confirm("Remove done tasks?")) {
     App.tasks = App.tasks.filter(x => !x.done)
+    App.save_tasks()
+    App.show_tasks()
+  }
+}
+
+App.remove_all_tasks = function () {
+  if (confirm("Remove all tasks?")) {
+    App.tasks = []
     App.save_tasks()
     App.show_tasks()
   }
@@ -249,12 +257,4 @@ App.get_random_string = function (n) {
 App.remove_task = function (id) {
   App.tasks = App.tasks.filter(x => x.id !== id)
   App.save_tasks()
-}
-
-App.remove_all_tasks = function () {
-  if (confirm("Remove all tasks?")) {
-    App.tasks = []
-    App.save_tasks()
-    App.show_tasks()
-  }
 }
