@@ -66,7 +66,7 @@ App.create_task_element = function (task) {
 
   el.append(text)
 
-  let remove = App.create("div", "task_remove")
+  let remove = App.create("div", "task_remove button")
   remove.textContent = "Remove"
   el.append(remove)
 

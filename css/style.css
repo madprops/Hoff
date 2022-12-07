@@ -19,23 +19,25 @@ body, html {
 }
 
 .button {
-  font-size: 1rem;
   cursor: pointer;
   flex-shrink: 0;
   min-width: 1.5rem;
-  border-width: 0;
   text-align: center;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  user-select: none;
   color: white;
   background-color: rgb(62, 62, 62);
+  user-select: none;
 }
 
 .button:hover {
-  background-color: rgb(62, 65, 128);
+  background-color: rgb(91, 105, 148);
+}
+
+.button:active {
+  background-color: rgb(73, 86, 126);
 }
 
 #input {
@@ -85,15 +87,11 @@ body, html {
 
 .task_remove {
   display: table-cell;
-  padding: 0.25rem;
+  /* padding: 0.25rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   cursor: pointer;
-  user-select: none;
-}
-
-.task_remove:hover {
-  background-color: rgb(91, 105, 148);
+  user-select: none; */
 }
 
 .flex_column_center {
