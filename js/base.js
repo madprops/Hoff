@@ -1,4 +1,4 @@
-App = {}
+const App = {}
 App.ls_tasks = "tasks_v2"
 
 App.init = function () {
