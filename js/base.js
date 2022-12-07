@@ -53,7 +53,7 @@ App.create_task_element = function (task) {
 
   //
   let move = App.create("div", "task_move")
-  move.title = "Move task vertically"
+  move.title = "Move task"
   let move_icon = App.create("object", "icon")
   move_icon.type = "image/svg+xml"
   move_icon.data = "img/move.svg"
