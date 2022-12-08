@@ -15,8 +15,16 @@ body, html {
   font-family: imported_font, sans-serif;
 }
 
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
 #filter {
-  margin-bottom: 1rem;
+  margin-bottom: 1.1rem;
   border-radius: 25px;
   text-align: center;
   width: 14rem;
@@ -24,14 +32,6 @@ body, html {
 
 #buttons {
   gap: 0.8rem;
-}
-
-#main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
 }
 
 .button {
