@@ -1,6 +1,5 @@
 :root {
   --shadow: drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.4));
-  --shadow_2: drop-shadow(3px 5px 2px rgba(255, 255, 255, 0.4));
 }
 
 @font-face {
