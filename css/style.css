@@ -67,8 +67,8 @@ body, html {
 }
 
 .task_text {
-  min-width: 25rem;
-  max-width: 25rem;
+  min-width: 28rem;
+  max-width: 28rem;
   filter: var(--shadow);
 }
 
