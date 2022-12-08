@@ -197,6 +197,10 @@ App.setup_keyboard = function () {
       App.add_task()
     } else if (e.key === "Escape") {
       App.clear_input()
+    } else if (e.key === "ArrowUp") {
+      App.move_input("up")
+    } else if (e.key === "ArrowDown") {
+      App.move_input("down")
     }
   })
 }
@@ -393,4 +397,24 @@ App.check_first = function () {
   }
 
   App.focus_first()
+}
+
+App.move_input = function (direction) {
+  let items = App.els(".task_text")
+  let waypoint = false
+
+  if (direction === "up") {
+    items.reverse()
+  }
+
+  for (let input of items) {
+    if (waypoint) {
+      input.focus()
+      return
+    }
+
+    if (input === document.activeElement) {
+      waypoint = true
+    }
+  }
 }
