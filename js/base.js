@@ -4,9 +4,17 @@ App.ls_tasks = "tasks_v2"
 App.init = function () {
   App.tasks = App.get_local_storage(App.ls_tasks) || []
   App.show_tasks()
-  App.focus_input()
   App.setup_mouse()
   App.setup_keyboard()
+  App.focus_first()
+}
+
+App.focus_first = function () {
+  let el = App.els(".task")[0]
+  
+  if (el) {
+    App.focus_input(el)
+  }
 }
 
 App.get_local_storage = function (ls_name) {
@@ -164,8 +172,7 @@ App.setup_mouse = function () {
         task.done = check.checked
         App.save_tasks()
       } else if (e.target.closest(".task_remove")) {
-        el.remove()
-        App.remove_task(id)
+        App.remove_task(el)
       }
     }
   })
@@ -185,17 +192,10 @@ App.setup_mouse = function () {
 
 App.setup_keyboard = function () {
   App.ev(document, "keydown", function (e) {
-    let input = App.el("#input")
-    let active = document.activeElement
-    
-    if (active.tagName.toLowerCase() !== "input") {
-      App.focus_input()
-    }
-
     if (e.key === "Enter") {
-      if (active === input) {
-        App.add_task()
-      }
+      App.add_task()
+    } else if (e.key === "Escape") {
+      App.clear_input()
     }
   })
 }
@@ -204,24 +204,22 @@ App.prepend_task = function (task) {
   let container = App.el("#tasks")
   let el = App.create_task_element(task)
   container.prepend(el)
+  el.focus()
+  App.focus_input(el)
 }
 
-App.focus_input = function () {
-  App.el("#input").focus()
+App.focus_input = function (el) {
+  App.el(".task_text", el).focus()
 }
 
 App.add_task = function () {
-  let value = input.value.trim()
-  input.value = ""
-  App.focus_input()
-
   let d = Date.now()
   let s = App.get_random_string(5)
   let id = `${d}_${s}`
 
   let task = {
     id: id,
-    text: value,
+    text: "",
     date: d,
     done: false,
   }
@@ -293,8 +291,10 @@ App.get_random_string = function (n) {
   return text
 }
 
-App.remove_task = function (id) {
+App.remove_task = function (el) {
+  let id = el.dataset.id
   App.tasks = App.tasks.filter(x => x.id !== id)
+  el.remove()
   App.save_tasks()
 }
 
@@ -359,4 +359,25 @@ App.show_info = function () {
   let s = "Tasks are saved in local storage.\n"
   s += "No network requests are made."
   alert(s)
+}
+
+App.clear_input = function () {
+  let input = App.get_focused_input()
+
+  if (input) {
+    if (input.value) {
+      input.value = ""
+    } else {
+      App.remove_task(input.closest(".task"))
+      App.focus_first()
+    }
+  }
+}
+
+App.get_focused_input = function () {
+  for (let input of App.els(".task_text")) {
+    if (input === document.activeElement) {
+      return input
+    }
+  }
 }

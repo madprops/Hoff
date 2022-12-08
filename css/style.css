@@ -40,16 +40,6 @@ body, html {
   background-color: rgb(71, 72, 121);
 }
 
-#input {
-  font-size: 1rem;
-  width: 20rem;
-  margin-bottom: 1rem;
-  padding: 0.2rem;
-  text-align: center;
-  outline: none;
-  border: none;
-}
-
 #tasks {
   display: flex;
   flex-direction: column;
@@ -71,16 +61,8 @@ body, html {
 }
 
 .task_text {
-  font-size: 1rem;
   min-width: 25rem;
   max-width: 25rem;
-  background-color: rgb(111, 111, 138);
-  outline: none;
-  border: none;
-  color: white;
-  padding: 0.25rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
 }
 
 .task_remove {
@@ -123,6 +105,20 @@ body, html {
 
 input[type=text] {
   font-family: imported_font, sans-serif;
+  font-size: 1rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  outline: none;
+  border: none;
+  background-color: rgb(111, 111, 138);
+  color: white;
+}
+
+input::placeholder {
+  color: rgb(255, 255, 255);
+  opacity: 0.4;
 }
 
 .icon {
