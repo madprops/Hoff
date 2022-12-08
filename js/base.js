@@ -193,6 +193,8 @@ App.setup_mouse = function () {
 
 App.setup_keyboard = function () {
   App.ev(document, "keydown", function (e) {
+    App.check_focus()
+
     if (e.key === "Enter") {
       App.add_task()
       e.preventDefault()
@@ -222,10 +224,6 @@ App.setup_keyboard = function () {
 
       e.preventDefault()
     } 
-    
-    else {
-      App.check_focus()
-    }
   })
 }
 
