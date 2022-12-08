@@ -23,8 +23,8 @@ body, html {
   flex-shrink: 0;
   min-width: 1.5rem;
   text-align: center;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   color: white;
@@ -44,7 +44,7 @@ body, html {
   display: flex;
   flex-direction: column;
   margin-top: 1.5rem;
-  gap: 0.8rem;
+  gap: 1rem;
 }
 
 .task {
@@ -114,8 +114,8 @@ body, html {
 input[type=text] {
   font-family: imported_font, sans-serif;
   font-size: 1rem;
-  padding-top: 0.2rem;
-  padding-bottom: 0.2rem;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
   padding-left: 0.35rem;
   padding-right: 0.35rem;
   outline: none;
