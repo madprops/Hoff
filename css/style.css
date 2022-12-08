@@ -67,10 +67,12 @@ body, html {
 
 .task_remove {
   cursor: pointer;
+  user-select: none;
 }
 
 .task_move {
   cursor: move;
+  user-select: none;
 }
 
 .flex_column_center {
@@ -118,7 +120,7 @@ input[type=text] {
 
 input::placeholder {
   color: rgb(255, 255, 255);
-  opacity: 0.4;
+  opacity: 0.44;
 }
 
 .icon {
