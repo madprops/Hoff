@@ -120,7 +120,7 @@ input[type=text] {
 
 input::placeholder {
   color: rgb(255, 255, 255);
-  opacity: 0.44;
+  opacity: 0.46;
 }
 
 .icon {
