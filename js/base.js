@@ -195,12 +195,36 @@ App.setup_keyboard = function () {
   App.ev(document, "keydown", function (e) {
     if (e.key === "Enter") {
       App.add_task()
-    } else if (e.key === "Escape") {
+      e.preventDefault()
+    } 
+    
+    else if (e.key === "Escape") {
       App.clear_input()
-    } else if (e.key === "ArrowUp") {
+      e.preventDefault()
+    } 
+    
+    else if (e.key === "ArrowUp") {
       App.move_input("up")
-    } else if (e.key === "ArrowDown") {
+      e.preventDefault()
+    } 
+    
+    else if (e.key === "ArrowDown") {
       App.move_input("down")
+      e.preventDefault()
+    } 
+    
+    else if (e.key === "Tab") {
+      if (e.shiftKey) {
+        App.move_input("up")
+      } else {
+        App.move_input("down")
+      }
+
+      e.preventDefault()
+    } 
+    
+    else {
+      App.check_focus()
     }
   })
 }
@@ -416,5 +440,11 @@ App.move_input = function (direction) {
     if (input === document.activeElement) {
       waypoint = true
     }
+  }
+}
+
+App.check_focus = function () {
+  if (!document.activeElement.classList.contains("task_text")) {
+    App.focus_first()
   }
 }
