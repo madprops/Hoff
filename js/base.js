@@ -6,6 +6,7 @@ App.init = function () {
   App.show_tasks()
   App.setup_mouse()
   App.setup_keyboard()
+  App.check_first()
   App.focus_first()
 }
 
@@ -257,8 +258,10 @@ App.remove_all_tasks = function () {
   if (App.tasks.length > 0) {
     if (confirm(`Remove all tasks? (${App.tasks.length})`)) {
       App.tasks = []
+      App.add_task()
       App.save_tasks()
       App.show_tasks()
+      App.focus_first()
     }
   }
 }
@@ -368,8 +371,10 @@ App.clear_input = function () {
     if (input.value) {
       input.value = ""
     } else {
-      App.remove_task(input.closest(".task"))
-      App.focus_first()
+      if (App.tasks.length > 1) {
+        App.remove_task(input.closest(".task"))
+        App.focus_first()
+      }
     }
   }
 }
@@ -379,5 +384,11 @@ App.get_focused_input = function () {
     if (input === document.activeElement) {
       return input
     }
+  }
+}
+
+App.check_first = function () {
+  if (App.tasks.length === 0) {
+    App.add_task()
   }
 }
