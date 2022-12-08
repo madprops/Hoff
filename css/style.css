@@ -28,6 +28,7 @@ body, html {
   border-radius: 25px;
   text-align: center;
   width: 14rem;
+  filter: var(--shadow);
 }
 
 #buttons {
