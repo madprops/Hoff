@@ -116,8 +116,8 @@ input[type=text] {
   font-size: 1rem;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding-left: 0.35rem;
+  padding-right: 0.35rem;
   outline: none;
   border: none;
   background-color: rgb(111, 111, 138);
