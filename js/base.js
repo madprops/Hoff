@@ -87,14 +87,7 @@ App.create_task_element = function (task) {
   text.placeholder = "Write something here"
 
   App.ev(text, "blur", function () {
-    let value = this.value.trim()
-    this.value = value
-    let tsk = App.get_task_by_id(task.id)
-
-    if (tsk.text !== value) {
-      tsk.text = value
-      App.save_tasks()
-    }
+    App.on_blur(this)
   })
 
   el.append(text)
@@ -478,5 +471,19 @@ App.move_input = function (direction) {
 App.check_focus = function () {
   if (!document.activeElement.classList.contains("task_text")) {
     App.focus_first()
+  }
+}
+
+// On input blur
+App.on_blur = function (el) {
+  let value = el.value.trim()
+  el.value = value
+  
+  let id = el.closest(".task").dataset.id
+  let task = App.get_task_by_id(id)
+
+  if (task.text !== value) {
+    task.text = value
+    App.save_tasks()
   }
 }
