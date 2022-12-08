@@ -14,6 +14,10 @@ body, html {
   font-family: imported_font, sans-serif;
 }
 
+#top {
+  gap: 0.8rem;
+}
+
 #main {
   display: flex;
   flex-direction: column;
@@ -49,7 +53,7 @@ body, html {
   display: flex;
   flex-direction: column;
   margin-top: 1.5rem;
-  gap: 1rem;
+  gap: 1.1rem;
 }
 
 .task {

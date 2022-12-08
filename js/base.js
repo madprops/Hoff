@@ -1,6 +1,7 @@
 const App = {}
 App.ls_tasks = "tasks_v2"
 
+// Program starts here
 App.init = function () {
   App.tasks = App.get_local_storage(App.ls_tasks) || []
   App.show_tasks()
@@ -9,6 +10,7 @@ App.init = function () {
   App.check_first()
 }
 
+// Focus first input
 App.focus_first = function () {
   let el = App.els(".task")[0]
   
@@ -17,6 +19,7 @@ App.focus_first = function () {
   }
 }
 
+// Get local storage object
 App.get_local_storage = function (ls_name) {
   let obj
 
@@ -34,10 +37,12 @@ App.get_local_storage = function (ls_name) {
   return obj
 }
 
+// Save local storage object
 App.save_local_storage = function (ls_name, obj) {
   localStorage.setItem(ls_name, JSON.stringify(obj))
 }
 
+// Put the tasks in the container
 App.show_tasks = function () {
   let container = App.el("#tasks")
   container.innerHTML = ""
@@ -49,6 +54,7 @@ App.show_tasks = function () {
   }
 }
 
+// Create a task's element
 App.create_task_element = function (task) {
   let el = App.create("div", "task") 
     
@@ -83,7 +89,7 @@ App.create_task_element = function (task) {
   App.ev(text, "blur", function () {
     let value = this.value.trim()
     this.value = value
-    let tsk = App.get_task(task.id)
+    let tsk = App.get_task_by_id(task.id)
 
     if (tsk.text !== value) {
       tsk.text = value
@@ -106,14 +112,17 @@ App.create_task_element = function (task) {
   return el
 }
 
+// Retrieve an element
 App.el = function (query, root = document) {
   return root.querySelector(query)
 }
 
+// Retrieve a list of elements
 App.els = function (query, root = document) {
   return Array.from(root.querySelectorAll(query))
 }
 
+// Create an element
 App.create = function (type, classes = "", id = "") {
   let el = document.createElement(type)
 
@@ -132,10 +141,12 @@ App.create = function (type, classes = "", id = "") {
   return el
 }
 
+// Add an event listener
 App.ev = function (element, action, callback, extra) {
   element.addEventListener(action, callback, extra)
 }
 
+// Setup mouse events
 App.setup_mouse = function () {
   let add_button = App.el("#add_button")
 
@@ -168,7 +179,7 @@ App.setup_mouse = function () {
 
       if (e.target.closest(".task_check")) {
         let check = e.target.closest(".task_check")
-        let task = App.get_task(id)
+        let task = App.get_task_by_id(id)
         task.done = check.checked
         App.save_tasks()
       } else if (e.target.closest(".task_remove")) {
@@ -191,6 +202,7 @@ App.setup_mouse = function () {
   })
 }
 
+// Setup keyboard events
 App.setup_keyboard = function () {
   App.ev(document, "keydown", function (e) {
     App.check_focus()
@@ -227,6 +239,7 @@ App.setup_keyboard = function () {
   })
 }
 
+// Prepend a task in the container
 App.prepend_task = function (task) {
   let container = App.el("#tasks")
   let el = App.create_task_element(task)
@@ -235,10 +248,12 @@ App.prepend_task = function (task) {
   App.focus_input(el)
 }
 
+// Focus an element's input
 App.focus_input = function (el) {
   App.el(".task_text", el).focus()
 }
 
+// Add a new task
 App.add_task = function () {
   let d = Date.now()
   let s = App.get_random_string(5)
@@ -256,7 +271,8 @@ App.add_task = function () {
   App.save_tasks()
 }
 
-App.get_task = function (id) {
+// Get a task by id
+App.get_task_by_id = function (id) {
   for (let task of App.tasks) {
     if (id === task.id) {
       return task
@@ -264,10 +280,12 @@ App.get_task = function (id) {
   }
 }
 
+// Save tasks to local storage
 App.save_tasks = function () {
   App.save_local_storage(App.ls_tasks, App.tasks)
 }
 
+// Remove tasks that are marked as done
 App.remove_done_tasks = function () {
   let done = App.get_done_tasks()
 
@@ -280,6 +298,7 @@ App.remove_done_tasks = function () {
   }
 }
 
+// Remove all tasks
 App.remove_all_tasks = function () {
   if (App.tasks.length > 0) {
     if (confirm(`Remove all tasks? (${App.tasks.length})`)) {
@@ -292,6 +311,7 @@ App.remove_all_tasks = function () {
   }
 }
 
+// Get a random int number from a range
 App.get_random_int = function (min, max, exclude = undefined) {
   let num = Math.floor(Math.random() * (max - min + 1) + min)
 
@@ -308,6 +328,7 @@ App.get_random_int = function (min, max, exclude = undefined) {
   return num
 }
 
+// Get a random string of a certain length
 App.get_random_string = function (n) {
   let text = ""
 
@@ -320,6 +341,7 @@ App.get_random_string = function (n) {
   return text
 }
 
+// Remove a task
 App.remove_task = function (el) {
   let id = el.dataset.id
   App.tasks = App.tasks.filter(x => x.id !== id)
@@ -327,6 +349,7 @@ App.remove_task = function (el) {
   App.save_tasks()
 }
 
+// Get tasks that are marked as done
 App.get_done_tasks = function () {
   let done = []
 
@@ -339,12 +362,14 @@ App.get_done_tasks = function () {
   return done
 }
 
+// On dragstart event
 App.on_dragstart = function (e) {
   App.drag_y = e.clientY
   App.drag_element = e.target.closest(".task")
   e.dataTransfer.setDragImage(new Image(), 0, 0)
 }
 
+// On dragover event
 App.on_dragover = function (e) {
   if (!e.target.closest(".task")) {
     return
@@ -367,10 +392,12 @@ App.on_dragover = function (e) {
   }
 }
 
+// On dragend event
 App.on_dragend = function (e) {
   App.reorder_tasks()
 }
 
+// Update tasks array based on element order
 App.reorder_tasks = function () {
   let ids = []
   let els = App.els(".task")
@@ -384,12 +411,14 @@ App.reorder_tasks = function () {
   App.save_tasks()
 }
 
+// Show some information
 App.show_info = function () {
   let s = "Tasks are saved in local storage.\n"
   s += "No network requests are made."
   alert(s)
 }
 
+// Clear input or remove task if empty
 App.clear_input = function () {
   let input = App.get_focused_input()
 
@@ -405,6 +434,7 @@ App.clear_input = function () {
   }
 }
 
+// Get input that is focused
 App.get_focused_input = function () {
   for (let input of App.els(".task_text")) {
     if (input === document.activeElement) {
@@ -413,6 +443,8 @@ App.get_focused_input = function () {
   }
 }
 
+// Check if no tasks - Focus first task
+// If no task add one - Always at least 1 task
 App.check_first = function () {
   if (App.tasks.length === 0) {
     App.add_task()
@@ -421,6 +453,7 @@ App.check_first = function () {
   App.focus_first()
 }
 
+// Move up or down to the next input
 App.move_input = function (direction) {
   let items = App.els(".task_text")
   let waypoint = false
@@ -441,6 +474,7 @@ App.move_input = function (direction) {
   }
 }
 
+// If no input focused then focus the first one
 App.check_focus = function () {
   if (!document.activeElement.classList.contains("task_text")) {
     App.focus_first()
