@@ -7,7 +7,6 @@ App.init = function () {
   App.setup_mouse()
   App.setup_keyboard()
   App.check_first()
-  App.focus_first()
 }
 
 App.focus_first = function () {
@@ -174,6 +173,7 @@ App.setup_mouse = function () {
         App.save_tasks()
       } else if (e.target.closest(".task_remove")) {
         App.remove_task(el)
+        App.check_first()
       }
     }
   })
@@ -391,4 +391,6 @@ App.check_first = function () {
   if (App.tasks.length === 0) {
     App.add_task()
   }
+
+  App.focus_first()
 }
