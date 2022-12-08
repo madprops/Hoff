@@ -15,7 +15,14 @@ body, html {
   font-family: imported_font, sans-serif;
 }
 
-#top {
+#filter {
+  margin-bottom: 1rem;
+  border-radius: 25px;
+  text-align: center;
+  width: 14rem;
+}
+
+#buttons {
   gap: 0.8rem;
 }
 

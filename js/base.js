@@ -56,7 +56,7 @@ App.show_tasks = function () {
 
 // Create a task's element
 App.create_task_element = function (task) {
-  let el = App.create("div", "task") 
+  let el = App.create("div", "task", `task_id_${task.id}`) 
     
   //
   let check = App.create("input", "task_check")
@@ -197,6 +197,10 @@ App.setup_mouse = function () {
 
 // Setup keyboard events
 App.setup_keyboard = function () {
+  App.filter = App.create_debouncer(function () {
+    App.do_filter()
+  }, 250)
+
   App.ev(document, "keydown", function (e) {
     App.check_focus()
 
@@ -206,7 +210,12 @@ App.setup_keyboard = function () {
     } 
     
     else if (e.key === "Escape") {
-      App.clear_input()
+      if (App.filter_focused()) {
+        App.clear_filter()
+      } else if (App.input_focused()) {
+        App.clear_input()
+      }
+
       e.preventDefault()
     } 
     
@@ -228,7 +237,11 @@ App.setup_keyboard = function () {
       }
 
       e.preventDefault()
-    } 
+    } else {
+      if (App.filter_focused()) {
+        App.filter()
+      }
+    }
   })
 }
 
@@ -448,7 +461,7 @@ App.check_first = function () {
 
 // Move up or down to the next input
 App.move_input = function (direction) {
-  let items = App.els(".task_text")
+  let items = [App.el("#filter")].concat(App.els(".task_text"))
   let waypoint = false
 
   if (direction === "up") {
@@ -469,7 +482,7 @@ App.move_input = function (direction) {
 
 // If no input focused then focus the first one
 App.check_focus = function () {
-  if (!document.activeElement.classList.contains("task_text")) {
+  if (!App.input_focused() && !App.filter_focused()) {
     App.focus_first()
   }
 }
@@ -478,7 +491,7 @@ App.check_focus = function () {
 App.on_blur = function (el) {
   let value = el.value.trim()
   el.value = value
-  
+
   let id = el.closest(".task").dataset.id
   let task = App.get_task_by_id(id)
 
@@ -486,4 +499,50 @@ App.on_blur = function (el) {
     task.text = value
     App.save_tasks()
   }
+}
+
+// Check if a task input is focused
+App.input_focused = function () {
+  return document.activeElement.classList.contains("task_text")
+}
+
+// Check if filter is focused
+App.filter_focused = function () {
+  return document.activeElement === App.el("#filter")
+}
+
+// Filter tasks
+App.do_filter = function () {
+  let value = App.el("#filter").value.trim().toLowerCase()
+
+  for (let task of App.tasks) {
+    let el = App.el(`#task_id_${task.id}`)
+
+    if (task.text.toLowerCase().includes(value)) {
+      el.classList.remove("hidden")
+    } else {
+      el.classList.add("hidden")
+    }
+  }
+}
+
+// Centralized function to create debouncers
+App.create_debouncer = function (func, delay) {
+  return (function () {
+    let timer
+
+    return function (...args) {
+      clearTimeout(timer)
+
+      timer = setTimeout(function () {
+        func(...args)
+      }, delay)
+    }
+  })()
+}
+
+// Clear the filter
+App.clear_filter = function () {
+  App.el("#filter").value = ""
+  App.do_filter()
 }
