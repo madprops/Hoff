@@ -471,13 +471,12 @@ App.update_input = function (el) {
   el.value = value
 
   let id = el.closest(".task").dataset.id
-  let task_el = el.closest(".task")
   let task = App.get_task_by_id(id)
-
+  
   if (task.text !== value) {
     task.text = value
     task.date = Date.now()
-    let date = App.el(".task_date", task_el)
+    let date = App.el(".task_date", el.closest(".task"))
     App.set_date(date, task)
     App.save_tasks()
   }
