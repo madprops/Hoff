@@ -173,9 +173,15 @@ App.setup_keyboard = function () {
     } 
     
     else if (e.key === "Escape") {
-      if (App.filter_focused()) {
+      if (App.popup_open) {
+        App.hide_all_popups()
+      }
+
+      else if (App.filter_focused()) {
         App.clear_filter()
-      } else if (App.input_focused()) {
+      } 
+      
+      else if (App.input_focused()) {
         App.clear_input()
       }
 

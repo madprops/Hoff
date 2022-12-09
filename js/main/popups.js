@@ -56,10 +56,17 @@ App.hide_popup = function (id) {
   App.popups[id].hide()
 }
 
+// Hide all popups
+App.hide_all_popups = function () {
+  for (let key in App.popups) {
+    App.popups[key].hide()
+  }
+}
+ 
 // Setup popups
 App.setup_popups = function () {  
   App.popups = {}
-  
+
   App.create_popup({
     id: "alert"
   })

@@ -59,6 +59,16 @@ body, html {
   background-color: rgb(71, 72, 121);
 }
 
+.button_2 {
+  background-color: transparent;
+  outline: 1px solid rgb(139, 145, 213);
+}
+
+.button_2:hover {
+  background-color: transparent;
+  outline: 1px solid rgb(176, 180, 224);
+}
+
 #tasks {
   display: flex;
   flex-direction: column;
