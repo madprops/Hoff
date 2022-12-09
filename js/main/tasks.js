@@ -114,6 +114,12 @@ App.setup_mouse = function () {
     App.remove_all_tasks()
   })
 
+  let sort_button = App.el("#sort_button")
+
+  App.ev(sort_button, "click", function () {
+    App.sort_tasks()
+  })
+
   App.ev(info_button, "click", function () {
     App.show_info()
   })
@@ -126,10 +132,7 @@ App.setup_mouse = function () {
       let id = el.dataset.id
 
       if (e.target.closest(".task_check")) {
-        let check = e.target.closest(".task_check")
-        let task = App.get_task_by_id(id)
-        task.done = check.checked
-        App.save_tasks()
+        App.toggle_check(e, id)
       } else if (e.target.closest(".task_remove")) {
         App.remove_task(el)
         App.check_first()
@@ -532,5 +535,25 @@ App.set_date = function (date, task) {
     date.textContent = App.nice_date(task.date)
   } else {
     date.textContent = "Empty Task"
+  }
+}
+
+// Toggle done checkbox
+App.toggle_check = function (e, id) {
+  let check = e.target.closest(".task_check")
+  let task = App.get_task_by_id(id)
+  task.done = check.checked
+  App.save_tasks()
+}
+
+// Sort tags based on state
+App.sort_tasks = function () {
+  if (confirm("Send done tasks to the bottom?")) {
+    App.tasks.sort(function (a, b) {
+      return b.done - a.done
+    })
+  
+    App.save_tasks()
+    App.show_tasks()
   }
 }
