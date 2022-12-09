@@ -1,6 +1,7 @@
 :root {
   --background_color: rgb(71, 74, 83);
   --text_color: white;
+  --button_color: rgb(91, 105, 148);
   --shadow: drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.4));
 }
 
@@ -46,7 +47,7 @@ body, html {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   color: white;
-  background-color: rgb(91, 105, 148);
+  background-color: var(--button_color);
   user-select: none;
   filter: var(--shadow);
 }
@@ -61,7 +62,7 @@ body, html {
 
 .button_2 {
   background-color: transparent;
-  outline: 1px solid rgb(139, 145, 213);
+  outline: 1px solid var(--button_color);
 }
 
 .button_2:hover {

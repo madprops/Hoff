@@ -168,7 +168,14 @@ App.setup_keyboard = function () {
     App.check_focus()
 
     if (e.key === "Enter") {
-      App.add_task()
+      if (App.popup_open) {
+        if (App.popup_mode === "dialog") {
+          App.dialog_enter()
+        }
+      } else {
+        App.add_task()
+      }
+
       e.preventDefault()
     } 
     
