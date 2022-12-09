@@ -550,7 +550,11 @@ App.toggle_check = function (e, id) {
 App.sort_tasks = function () {
   if (confirm("Send done tasks to the bottom?")) {
     App.tasks.sort(function (a, b) {
-      return b.done - a.done
+      if (b.done === a.done) {
+        return b.date > a.date ? -1 : 1
+      } else {
+        return b.done - a.done
+      }
     })
   
     App.save_tasks()
