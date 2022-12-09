@@ -38,9 +38,9 @@ App.create_task_element = function (task) {
   let bottom = App.create("div", "task_bottom")
 
   //
-  let date = App.create("div", "task_date")
-  App.set_date(date, task)
-  top.append(date)
+  let info = App.create("div", "task_info")
+  App.set_info(info, task)
+  top.append(info)
   el.append(top)
   
   //
@@ -497,8 +497,8 @@ App.update_input = function (el, reflect = false) {
   if (task.text.trim() !== value) {
     task.text = value
     task.date = Date.now()
-    let date = App.el(".task_date", el.closest(".task"))
-    App.set_date(date, task)
+    let info = App.el(".task_info", el.closest(".task"))
+    App.set_info(info, task)
     App.save_tasks()
   }
 }
@@ -521,8 +521,8 @@ App.do_filter = function () {
   for (let task of App.tasks) {
     let el = App.el(`#task_id_${task.id}`)
     let text = task.text.toLowerCase()
-    let date = App.el(".task_date", el).textContent.toLowerCase()
-    let match = words.every(x => text.includes(x) || date.includes(x))
+    let info = App.el(".task_info", el).textContent.toLowerCase()
+    let match = words.every(x => text.includes(x) || info.includes(x))
     
     if (match) {
       el.classList.remove("hidden")
@@ -543,12 +543,12 @@ App.focus_filter = function () {
   App.el("#filter").focus()
 }
 
-// Set date
-App.set_date = function (date, task) {
+// Set a task's header info
+App.set_info = function (el, task) {
   if (task.text) {
-    date.textContent = App.nice_date(task.date)
+    el.textContent = App.nice_date(task.date)
   } else {
-    date.textContent = "Empty Task"
+    el.textContent = "Empty Task"
   }
 }
 
