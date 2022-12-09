@@ -271,6 +271,7 @@ App.remove_done_tasks = function () {
       App.tasks = App.tasks.filter(x => !x.done)
       App.save_tasks()
       App.show_tasks()
+      App.check_first()
     }
   }
 }
