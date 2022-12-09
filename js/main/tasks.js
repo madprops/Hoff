@@ -546,7 +546,7 @@ App.toggle_check = function (e, id) {
   App.save_tasks()
 }
 
-// Sort tags based on state
+// Sort tags based on state and date
 App.sort_tasks = function () {
   if (confirm("Send done tasks to the bottom?")) {
     App.tasks.sort(function (a, b) {
