@@ -37,7 +37,7 @@ body, html {
 .button {
   cursor: pointer;
   flex-shrink: 0;
-  min-width: 1.5rem;
+  min-width: 1.1rem;
   text-align: center;
   padding-top: 0.35rem;
   padding-bottom: 0.35rem;
