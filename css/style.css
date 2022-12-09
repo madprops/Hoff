@@ -61,10 +61,18 @@ body, html {
   display: flex;
   flex-direction: column;
   margin-top: 1.5rem;
-  gap: 1.1rem;
+  gap: 1.5rem;
 }
 
 .task {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.task_bottom {
   display: flex;
   flex-direction: row;
   gap: 0.8rem;

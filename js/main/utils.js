@@ -69,3 +69,8 @@ App.get_local_storage = function (ls_name) {
 App.save_local_storage = function (ls_name, obj) {
   localStorage.setItem(ls_name, JSON.stringify(obj))
 }
+
+// Get a nice date string
+App.nice_date = function (date = Date.now()) {
+  return dateFormat(date, "dd/mmm/yy | h:MM:ss tt")
+}

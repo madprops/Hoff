@@ -33,13 +33,21 @@ App.show_tasks = function () {
 // Create a task's element
 App.create_task_element = function (task) {
   let el = App.create("div", "task", `task_id_${task.id}`) 
-    
+  let top = App.create("div", "task_top")
+  let bottom = App.create("div", "task_bottom")
+
+  //
+  let date = App.create("div", "task_date")
+  date.textContent = App.nice_date(task.date)
+  top.append(date)
+  el.append(top)
+  
   //
   let check = App.create("input", "task_check")
   check.title = "Mark as done"
   check.type = "checkbox"
   check.checked = task.done
-  el.append(check)
+  bottom.append(check)
 
   //
   let move = App.create("div", "task_move")
@@ -54,7 +62,7 @@ App.create_task_element = function (task) {
   })
 
   move.append(move_icon)
-  el.append(move)   
+  bottom.append(move)   
   
   //
   let text = App.create("input", "task_text")
@@ -66,7 +74,7 @@ App.create_task_element = function (task) {
     App.on_blur(this)
   })
 
-  el.append(text)
+  bottom.append(text)
 
   //
   let remove = App.create("div", "task_remove")
@@ -75,8 +83,9 @@ App.create_task_element = function (task) {
   remove_icon.type = "image/svg+xml"
   remove_icon.data = "img/remove.svg"
   remove.append(remove_icon)
-  el.append(remove)
+  bottom.append(remove)
 
+  el.append(bottom)
   el.dataset.id = task.id
   return el
 }
@@ -224,6 +233,15 @@ App.get_task_by_id = function (id) {
   for (let task of App.tasks) {
     if (id === task.id) {
       return task
+    }
+  }
+}
+
+// Get a task by id
+App.get_task_element_by_id = function (id) {
+  for (let el of App.els(".task")) {
+    if (id === el.dataset.id) {
+      return el
     }
   }
 }
@@ -435,10 +453,14 @@ App.on_blur = function (el) {
   el.value = value
 
   let id = el.closest(".task").dataset.id
+  let task_el = el.closest(".task")
   let task = App.get_task_by_id(id)
 
   if (task.text !== value) {
     task.text = value
+    task.date = Date.now()
+    let date = App.el(".task_date", task_el)
+    date.textContent = App.nice_date(task.date)
     App.save_tasks()
   }
 }
@@ -456,11 +478,15 @@ App.filter_focused = function () {
 // Filter tasks
 App.do_filter = function () {
   let value = App.el("#filter").value.trim().toLowerCase()
+  let words = value.split(" ").filter(x => x !== "")
 
   for (let task of App.tasks) {
     let el = App.el(`#task_id_${task.id}`)
-
-    if (task.text.toLowerCase().includes(value)) {
+    let text = task.text.toLowerCase()
+    let date = App.el(".task_date", el).textContent.toLowerCase()
+    let match = words.every(x => text.includes(x) || date.includes(x))
+    
+    if (match) {
       el.classList.remove("hidden")
     } else {
       el.classList.add("hidden")
