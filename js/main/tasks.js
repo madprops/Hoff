@@ -462,16 +462,23 @@ App.on_blur = function (el) {
 
 // On input event
 App.do_on_input = function (el) {
-  App.update_input(el)
+  App.update_input(el, false)
 }
 
 // Update input
-App.update_input = function (el) {
+App.update_input = function (el, trim = true) {
+  let value = el.value
+
+  if (trim) {
+    value = value.trim()
+    el.value = value
+  }
+
   let id = el.closest(".task").dataset.id
   let task = App.get_task_by_id(id)
   
-  if (task.text !== el.value) {
-    task.text = el.value
+  if (task.text !== value) {
+    task.text = value
     task.date = Date.now()
     let date = App.el(".task_date", el.closest(".task"))
     App.set_date(date, task)
