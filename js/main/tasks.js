@@ -460,27 +460,26 @@ App.check_focus = function () {
 
 // On input blur
 App.on_blur = function (el) {
-  App.update_input(el)
+  App.update_input(el, true)
 }
 
 // On input event
 App.do_on_input = function (el) {
-  App.update_input(el, false)
+  App.update_input(el)
 }
 
 // Update input
-App.update_input = function (el, trim = true) {
-  let value = el.value
+App.update_input = function (el, reflect = false) {
+  let value = el.value.trim()
 
-  if (trim) {
-    value = value.trim()
+  if (reflect) {
     el.value = value
   }
 
   let id = el.closest(".task").dataset.id
   let task = App.get_task_by_id(id)
   
-  if (task.text !== value) {
+  if (task.text.trim() !== value) {
     task.text = value
     task.date = Date.now()
     let date = App.el(".task_date", el.closest(".task"))
