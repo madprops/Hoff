@@ -25,13 +25,19 @@
   <body>
     <div id="main">
       <div id="top" class="flex_column_center">
-        <input id="filter" type="text" placeholder="Filter..." autocomplete="off" spellcheck="false">
+        <input id="filter" type="text" placeholder="Filter Tasks" autocomplete="off" spellcheck="false">
 
         <div id="buttons" class="flex_row_center">
-          <div id="add_button" class="button" title="Add new task">Add Task</div>
-          <div id="remove_done_button" class="button" title="Remove done tasks">Remove Done</div>
-          <div id="remove_all_button" class="button" title="Remove all tasks">Remove All</div>
+          <div id="add_button" class="button" title="Add new task">Add</div>
           <div id="sort_button" class="button" title="Sort tasks by done and date">Sort</div>
+          <div id="remove_done_button" class="button flex_row_center gap_1" title="Remove done tasks">
+            <object class="icon_2" type="image/svg+xml" data="img/remove.svg"></object>
+            <div>Done</div>
+          </div>
+          <div id="remove_all_button" class="button flex_row_center gap_1" title="Remove all tasks">
+            <object class="icon_2" type="image/svg+xml" data="img/remove.svg"></object>
+            <div>All</div>
+          </div>
           <div id="info_button" class="button" title="Information">?</div>
         </div>
       </div>
