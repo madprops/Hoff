@@ -6,6 +6,7 @@ App.init = function () {
   App.show_tasks()
   App.setup_mouse()
   App.setup_keyboard()
+  App.setup_popups()
   App.check_first()
 }
 
@@ -267,25 +268,25 @@ App.remove_done_tasks = function () {
   let done = App.get_done_tasks()
 
   if (done.length > 0) {
-    if (confirm(`Remove done tasks? (${done.length})`)) {
+    App.show_confirm(`Remove done tasks? (${done.length})`, function () {
       App.tasks = App.tasks.filter(x => !x.done)
       App.save_tasks()
       App.show_tasks()
       App.check_first()
-    }
+    })
   }
 }
 
 // Remove all tasks
 App.remove_all_tasks = function () {
   if (App.tasks.length > 0) {
-    if (confirm(`Remove all tasks? (${App.tasks.length})`)) {
+    App.show_confirm(`Remove all tasks? (${App.tasks.length})`, function () {
       App.tasks = []
       App.add_task()
       App.save_tasks()
       App.show_tasks()
       App.focus_first()
-    }
+    })
   }
 }
 
@@ -393,7 +394,7 @@ App.reorder_tasks = function () {
 App.show_info = function () {
   let s = "Tasks are saved in local storage.\n"
   s += "No network requests are made."
-  alert(s)
+  App.show_alert(s)
 }
 
 // Clear input or remove task if empty
@@ -548,7 +549,7 @@ App.toggle_check = function (e, id) {
 
 // Sort tags based on state and date
 App.sort_tasks = function () {
-  if (confirm("Send done tasks to the bottom?")) {
+  App.show_confirm("Send done tasks to the bottom?", function () {
     App.tasks.sort(function (a, b) {
       if (b.done === a.done) {
         return b.date > a.date ? -1 : 1
@@ -559,5 +560,5 @@ App.sort_tasks = function () {
   
     App.save_tasks()
     App.show_tasks()
-  }
+  })
 }
