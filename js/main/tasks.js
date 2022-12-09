@@ -38,7 +38,7 @@ App.create_task_element = function (task) {
 
   //
   let date = App.create("div", "task_date")
-  date.textContent = App.nice_date(task.date)
+  App.set_date(date, task)
   top.append(date)
   el.append(top)
   
@@ -72,6 +72,10 @@ App.create_task_element = function (task) {
 
   App.ev(text, "blur", function () {
     App.on_blur(this)
+  })
+
+  App.ev(text, "input", function () {
+    App.on_input(this)
   })
 
   bottom.append(text)
@@ -151,6 +155,10 @@ App.setup_keyboard = function () {
   App.filter = App.create_debouncer(function () {
     App.do_filter()
   }, 250)
+
+  App.on_input = App.create_debouncer(function (input) {
+    App.do_on_input(input)
+  }, 500)
 
   App.ev(document, "keydown", function (e) {
     App.check_focus()
@@ -449,6 +457,16 @@ App.check_focus = function () {
 
 // On input blur
 App.on_blur = function (el) {
+  App.update_input(el)
+}
+
+// On input event
+App.do_on_input = function (el) {
+  App.update_input(el)
+}
+
+// Update input
+App.update_input = function (el) {
   let value = el.value.trim()
   el.value = value
 
@@ -460,7 +478,7 @@ App.on_blur = function (el) {
     task.text = value
     task.date = Date.now()
     let date = App.el(".task_date", task_el)
-    date.textContent = App.nice_date(task.date)
+    App.set_date(date, task)
     App.save_tasks()
   }
 }
@@ -503,4 +521,13 @@ App.clear_filter = function () {
 // Focus the filter
 App.focus_filter = function () {
   App.el("#filter").focus()
+}
+
+// Set date
+App.set_date = function (date, task) {
+  if (task.text) {
+    date.textContent = App.nice_date(task.date)
+  } else {
+    date.textContent = "Empty Task"
+  }
 }
