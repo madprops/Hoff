@@ -442,7 +442,16 @@ App.check_first = function () {
     App.add_task()
   }
 
-  App.focus_first()
+  if (App.first_task_empty()) {
+    App.focus_first()
+  } else {
+    App.focus_filter()
+  }
+}
+
+// Check if first task is empty
+App.first_task_empty = function () {
+  return App.tasks[0].text === ""
 }
 
 // Move up or down to the next input
