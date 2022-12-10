@@ -24,6 +24,10 @@ App.setup_mouse = function () {
     App.sort_tasks()
   })
 
+  App.ev(undo_button, "click", function () {
+    App.undo()
+  })
+
   App.ev(info_button, "click", function () {
     App.show_info()
   })

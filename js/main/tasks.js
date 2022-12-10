@@ -3,11 +3,11 @@ App.ls_tasks = "tasks_v2"
 // Program starts here
 App.init = function () {
   App.tasks = App.get_local_storage(App.ls_tasks) || []
-  App.show_tasks()
+  App.setup_backup()
   App.setup_mouse()
   App.setup_keyboard()
   App.setup_popups()
-  App.check_first()
+  App.show_tasks()
 }
 
 // Focus first input
@@ -29,6 +29,8 @@ App.show_tasks = function () {
     let el = App.create_task_element(task)    
     container.append(el)
   }
+
+  App.check_first()
 }
 
 // Create a task's element
@@ -156,10 +158,10 @@ App.remove_done_tasks = function () {
 
   if (done.length > 0) {
     App.show_confirm(`Remove done tasks? (${done.length})`, function () {
+      App.backup_tasks()
       App.tasks = App.tasks.filter(x => !x.done)
       App.save_tasks()
       App.show_tasks()
-      App.check_first()
     })
   }
 }
@@ -168,11 +170,11 @@ App.remove_done_tasks = function () {
 App.remove_all_tasks = function () {
   if (App.tasks.length > 0) {
     App.show_confirm(`Remove all tasks? (${App.tasks.length})`, function () {
+      App.backup_tasks()
       App.tasks = []
       App.add_task()
       App.save_tasks()
       App.show_tasks()
-      App.focus_first()
     })
   }
 }
@@ -209,6 +211,7 @@ App.get_random_string = function (n) {
 
 // Remove a task
 App.remove_task = function (el) {
+  App.backup_tasks()
   let id = el.dataset.id
   App.tasks = App.tasks.filter(x => x.id !== id)
   el.remove()
@@ -448,4 +451,34 @@ App.sort_tasks = function () {
     App.save_tasks()
     App.show_tasks()
   })
+}
+
+// Setup backup
+App.setup_backup = function () {
+  App.lock_backup = App.create_debouncer(function () {
+    App.backup_locked = false
+  }, 1234)
+}
+
+// Backup tasks
+App.backup_tasks = function () {
+  if (App.backup_locked) {
+    App.lock_backup()
+    return
+  }
+  
+  App.tasks_backup = App.tasks.slice(0)
+  App.backup_locked = true
+  App.lock_backup()
+}
+
+// Restore tasks from backup
+App.undo = function () {
+  if (App.tasks_backup) {
+    App.show_confirm("Restore last backup?", function () {
+      App.tasks = App.tasks_backup.slice(0)
+      App.tasks_backup = undefined
+      App.show_tasks()
+    })
+  }
 }
