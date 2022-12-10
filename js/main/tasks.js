@@ -478,6 +478,7 @@ App.undo = function () {
     App.show_confirm("Restore last backup?", function () {
       App.tasks = App.tasks_backup.slice(0)
       App.tasks_backup = undefined
+      App.save_tasks()
       App.show_tasks()
     })
   }
