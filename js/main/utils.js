@@ -72,5 +72,5 @@ App.save_local_storage = function (ls_name, obj) {
 
 // Get a nice date string
 App.nice_date = function (date = Date.now()) {
-  return dateFormat(date, "ddd - dd/mmm/yy - h:MM:ss tt")
+  return dateFormat(date, "ddd - dd/mmm/yy - h:MM tt")
 }
