@@ -442,11 +442,7 @@ App.check_first = function () {
     App.add_task()
   }
 
-  if (App.first_task_empty()) {
-    App.focus_first()
-  } else {
-    App.focus_filter()
-  }
+  App.focus_first()
 }
 
 // Check if first task is empty
@@ -478,7 +474,7 @@ App.move_input = function (direction) {
 // If no input focused then focus the first one
 App.check_focus = function () {
   if (!App.input_focused() && !App.filter_focused()) {
-    App.focus_filter()
+    App.focus_first()
   }
 }
 
@@ -545,11 +541,6 @@ App.do_filter = function () {
 App.clear_filter = function () {
   App.el("#filter").value = ""
   App.do_filter()
-}
-
-// Focus the filter
-App.focus_filter = function () {
-  App.el("#filter").focus()
 }
 
 // Set a task's header info
