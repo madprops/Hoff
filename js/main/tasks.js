@@ -282,7 +282,9 @@ App.reorder_tasks = function () {
 
 // Show some information
 App.show_info = function () {
-  let s = "Tasks are saved in local storage.\n"
+  let s = ""
+  s += "This is a simple TODO list.\n"
+  s += "Tasks are saved in local storage.\n"
   s += "No network requests are made."
   App.show_alert(s)
 }
