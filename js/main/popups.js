@@ -152,34 +152,3 @@ App.show_confirm = function (message, action) {
 
   App.show_dialog(message, buttons)
 }
-
-// Show textarea
-App.show_textarea = function (message, text) {
-  App.el("#textarea_message").textContent = message
-  App.el("#textarea_text").value = text
-  App.show_popup("textarea")
-}
-
-// Copy textarea to clipboard
-App.textarea_copy = function () {
-  App.hide_popup("textarea")
-  App.copy_to_clipboard(App.el("#textarea_text").value.trim())
-  App.show_alert("Copied to clipboard")
-}
-
-// Show input
-App.show_input = function (message, button, action) {
-  App.input_action = action
-  App.el("#input_message").textContent = message
-  let  input_text = App.el("#input_text")
-  input_text.value = ""
-  App.el("#input_submit").textContent = button
-  App.show_popup("input")
-  input_text.focus()
-}
-
-// On input enter
-App.input_enter = function () {
-  App.hide_popup("input")
-  App.input_action(App.el("#input_text").value.trim())
-}
