@@ -111,6 +111,16 @@ App.setup_keyboard = function () {
       App.move_input("down")
       e.preventDefault()
     } 
+
+    else if (e.key === "ArrowLeft") {
+      App.dialog_left()
+      e.preventDefault()
+    } 
+
+    else if (e.key === "ArrowRight") {
+      App.dialog_right()
+      e.preventDefault()
+    } 
     
     else if (e.key === "Tab") {
       if (e.shiftKey) {

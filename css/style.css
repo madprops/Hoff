@@ -228,3 +228,7 @@ object {
 .pre {
   white-space: pre;
 }
+
+.hovered {
+  outline: 1px solid rgb(188, 177, 240);
+}
