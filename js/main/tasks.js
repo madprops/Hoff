@@ -50,6 +50,13 @@ App.create_task_element = function (task) {
   check.title = "Mark as done"
   check.type = "checkbox"
   check.checked = task.done
+
+  App.ev(check, "change", function () {
+    task.date = Date.now()
+    App.set_info(info, task)
+    App.save_tasks()
+  })
+
   bottom.append(check)
 
   //
