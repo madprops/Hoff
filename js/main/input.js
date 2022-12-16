@@ -113,13 +113,17 @@ App.setup_keyboard = function () {
     } 
 
     else if (e.key === "ArrowLeft") {
-      App.dialog_left()
-      e.preventDefault()
+      if (App.popup_open) {
+        App.dialog_left()
+        e.preventDefault()
+      }
     } 
 
     else if (e.key === "ArrowRight") {
-      App.dialog_right()
-      e.preventDefault()
+      if (App.popup_open) {
+        App.dialog_right()
+        e.preventDefault()
+      }
     } 
     
     else if (e.key === "Tab") {
