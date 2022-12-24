@@ -13,7 +13,7 @@
 body, html {
   background-color: var(--background_color);
   color: var(--text_color);
-  font-size: 18px;
+  font-size: 17px;
   font-family: imported_font, sans-serif;
 }
 
