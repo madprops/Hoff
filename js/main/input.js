@@ -6,16 +6,10 @@ App.setup_mouse = function () {
     App.add_task()
   })
 
-  let remove_done_button = App.el("#remove_done_button")
+  let remove_button = App.el("#remove_button")
 
-  App.ev(remove_done_button, "click", function () {
-    App.remove_done_tasks()
-  })
-
-  let remove_all_button = App.el("#remove_all_button")
-
-  App.ev(remove_all_button, "click", function () {
-    App.remove_all_tasks()
+  App.ev(remove_button, "click", function () {
+    App.remove_tasks_dialog()
   })
 
   App.ev(undo_button, "click", function () {
@@ -68,15 +62,8 @@ App.setup_keyboard = function () {
   App.ev(document, "keydown", function (e) {
     App.check_focus()
 
-    if (e.key === "Enter") {
-      if (App.popup_open) {
-        if (App.popup_mode === "dialog") {
-          App.dialog_enter()
-        }
-      } else {
-        App.add_task()
-      }
-
+    if (e.key === "Enter") {      
+      App.add_task()
       e.preventDefault()
     } 
     
@@ -104,20 +91,6 @@ App.setup_keyboard = function () {
     else if (e.key === "ArrowDown") {
       App.move_input("down")
       e.preventDefault()
-    } 
-
-    else if (e.key === "ArrowLeft") {
-      if (App.popup_open) {
-        App.dialog_left()
-        e.preventDefault()
-      }
-    } 
-
-    else if (e.key === "ArrowRight") {
-      if (App.popup_open) {
-        App.dialog_right()
-        e.preventDefault()
-      }
     } 
     
     else if (e.key === "Tab") {

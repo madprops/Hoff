@@ -160,30 +160,40 @@ App.save_tasks = function () {
   App.save_local_storage(App.ls_tasks, App.tasks)
 }
 
+// Show remove tasks dialog
+App.remove_tasks_dialog = function () {
+  let buttons = [
+    ["Done Tasks", function (){
+      App.remove_done_tasks()
+    }, false],
+    ["All Tasks", function () {
+      App.remove_all_tasks()
+    }, false],
+  ]
+
+  App.show_dialog("Remove Tasks", buttons)
+}
+
 // Remove tasks that are marked as done
 App.remove_done_tasks = function () {
   let done = App.get_done_tasks()
 
   if (done.length > 0) {
-    App.show_confirm(`Remove done tasks? (${done.length})`, function () {
-      App.backup_tasks()
-      App.tasks = App.tasks.filter(x => !x.done)
-      App.save_tasks()
-      App.show_tasks()
-    })
+    App.backup_tasks()
+    App.tasks = App.tasks.filter(x => !x.done)
+    App.save_tasks()
+    App.show_tasks()
   }
 }
 
 // Remove all tasks
 App.remove_all_tasks = function () {
   if (App.tasks.length > 0) {
-    App.show_confirm(`Remove all tasks? (${App.tasks.length})`, function () {
-      App.backup_tasks()
-      App.tasks = []
-      App.add_task()
-      App.save_tasks()
-      App.show_tasks()
-    })
+    App.backup_tasks()
+    App.tasks = []
+    App.add_task()
+    App.save_tasks()
+    App.show_tasks()
   }
 }
 
@@ -480,11 +490,9 @@ App.backup_tasks = function () {
 // Restore tasks from backup
 App.undo = function () {
   if (App.tasks_backup) {
-    App.show_confirm("Restore last backup?", function () {
-      App.tasks = App.tasks_backup.slice(0)
-      App.tasks_backup = undefined
-      App.save_tasks()
-      App.show_tasks()
-    })
+    App.tasks = App.tasks_backup.slice(0)
+    App.tasks_backup = undefined
+    App.save_tasks()
+    App.show_tasks()
   }
 }
