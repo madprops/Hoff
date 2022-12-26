@@ -92,12 +92,8 @@ App.create_task_element = function (task) {
   bottom.append(text)
 
   //
-  let remove = App.create("div", "task_remove")
-  remove.title = "Remove task"
-  let remove_icon = App.create("object", "icon")
-  remove_icon.type = "image/svg+xml"
-  remove_icon.data = "img/remove.svg"
-  remove.append(remove_icon)
+  let remove = App.create("div", "task_remove action")
+  remove.textContent = "x"
   bottom.append(remove)
 
   el.append(bottom)
