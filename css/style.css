@@ -49,10 +49,10 @@ body, html {
   flex-shrink: 0;
   min-width: 1.1rem;
   text-align: center;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-  padding-left: 0.35rem;
-  padding-right: 0.35rem;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+  padding-left: 0.45rem;
+  padding-right: 0.45rem;
   color: white;
   background-color: var(--button_color);
   user-select: none;
