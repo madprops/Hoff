@@ -204,7 +204,7 @@ object {
   background-color: var(--background_color);
   border: 2px solid rgb(116, 125, 162);
   color: var(--text_color);
-  margin-top: 8rem;
+  margin-top: 7.4rem;
 }
 
 .popup_main {
