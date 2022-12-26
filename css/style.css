@@ -4,6 +4,7 @@
   --button_color: rgb(91, 105, 148);
   --vertical_padding: 0.35rem;
   --horizontal_padding: 0.45rem;
+  --top_item_width: 5rem;
 }
 
 @font-face {
@@ -23,7 +24,7 @@ body, html {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 0.55rem;
 }
 
 #top {
@@ -32,17 +33,9 @@ body, html {
   gap: 1rem;
 }
 
-.top_button {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
-}
-
 #filter {
-  width: 5.5rem;
   text-align: center;
+  width: var(--top_item_width);
   padding-top: var(--vertical_padding);
   padding-bottom: var(--vertical_padding);
   padding-left: var(--horizontal_padding);
@@ -65,6 +58,10 @@ body, html {
   color: white;
   background-color: var(--button_color);
   user-select: none;
+}
+
+.top_button {
+  min-width: var(--top_item_width);
 }
 
 .button:hover {
@@ -208,7 +205,7 @@ object {
   background-color: var(--background_color);
   border: 2px solid rgb(116, 125, 162);
   color: var(--text_color);
-  margin-top: 7.7rem;
+  margin-top: 4.4rem;
 }
 
 .popup_main {
