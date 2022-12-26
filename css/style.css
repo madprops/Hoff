@@ -2,7 +2,7 @@
   --background_color: rgb(71, 74, 83);
   --text_color: white;
   --button_color: rgb(91, 105, 148);
-  --vertical_padding: 0.35rem;
+  --vertical_padding: 0.36rem;
   --horizontal_padding: 0.45rem;
   --top_item_width: 5rem;
 }
@@ -43,7 +43,7 @@ body, html {
 }
 
 #buttons {
-  gap: 0.8rem;
+  gap: 0.55rem;
 }
 
 .button {
@@ -51,10 +51,10 @@ body, html {
   flex-shrink: 0;
   min-width: 1.1rem;
   text-align: center;
-  padding-top: 0.35rem;
-  padding-bottom: 0.35rem;
-  padding-left: 0.45rem;
-  padding-right: 0.45rem;
+  padding-top: var(--vertical_padding);
+  padding-bottom: var(--vertical_padding);
+  padding-left: var(--horizontal_padding);
+  padding-right: var(--horizontal_padding);
   color: white;
   background-color: var(--button_color);
   user-select: none;
