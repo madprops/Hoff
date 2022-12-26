@@ -18,12 +18,6 @@ App.setup_mouse = function () {
     App.remove_all_tasks()
   })
 
-  let sort_button = App.el("#sort_button")
-
-  App.ev(sort_button, "click", function () {
-    App.sort_tasks()
-  })
-
   App.ev(undo_button, "click", function () {
     App.undo()
   })

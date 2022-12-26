@@ -53,8 +53,9 @@ App.create_task_element = function (task) {
 
   App.ev(check, "change", function () {
     task.date = Date.now()
-    App.set_info(info, task)
+    App.sort_tasks()
     App.save_tasks()
+    App.show_tasks()
   })
 
   bottom.append(check)
@@ -448,17 +449,12 @@ App.toggle_check = function (e, id) {
 
 // Sort tags based on state and date
 App.sort_tasks = function () {
-  App.show_confirm("Send done tasks to the bottom?", function () {
-    App.tasks.sort(function (a, b) {
-      if (b.done === a.done) {
-        return b.date > a.date ? -1 : 1
-      } else {
-        return b.done - a.done
-      }
-    })
-  
-    App.save_tasks()
-    App.show_tasks()
+  App.tasks.sort(function (a, b) {
+    if (b.done === a.done) {
+      return b.date > a.date ? -1 : 1
+    } else {
+      return b.done - a.done
+    }
   })
 }
 
