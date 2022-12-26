@@ -2,7 +2,6 @@
   --background_color: rgb(71, 74, 83);
   --text_color: white;
   --button_color: rgb(91, 105, 148);
-  --shadow: drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.4));
 }
 
 @font-face {
@@ -38,7 +37,7 @@ body, html {
   border-radius: 25px;
   text-align: center;
   width: 12rem;
-  filter: var(--shadow);
+  background-color: #61616a;
 }
 
 #buttons {
@@ -57,7 +56,6 @@ body, html {
   color: white;
   background-color: var(--button_color);
   user-select: none;
-  filter: var(--shadow);
 }
 
 .button:hover {
@@ -104,13 +102,11 @@ body, html {
 .task_check {
   width: 1rem;
   height: 1rem;
-  filter: var(--shadow);
 }
 
 .task_text {
   min-width: 28rem;
   max-width: 28rem;
-  filter: var(--shadow);
 }
 
 .task_remove {
@@ -162,8 +158,8 @@ body, html {
 input[type=text] {
   font-family: imported_font, sans-serif;
   font-size: 1rem;
-  padding-top: 0.35rem;
-  padding-bottom: 0.35rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
   padding-left: 0.35rem;
   padding-right: 0.35rem;
   outline: none;
@@ -180,7 +176,6 @@ input::placeholder {
 .icon {
   width: 1rem;
   height: 1rem;
-  filter: var(--shadow);
 }
 
 .icon_2 {
