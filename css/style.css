@@ -2,6 +2,8 @@
   --background_color: rgb(71, 74, 83);
   --text_color: white;
   --button_color: rgb(91, 105, 148);
+  --vertical_padding: 0.35rem;
+  --horizontal_padding: 0.45rem;
 }
 
 @font-face {
@@ -24,6 +26,12 @@ body, html {
   padding: 1rem;
 }
 
+#top {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
 .top_button {
   display: flex;
   flex-direction: row;
@@ -33,11 +41,13 @@ body, html {
 }
 
 #filter {
-  margin-bottom: 1.1rem;
-  border-radius: 25px;
+  width: 6rem;
   text-align: center;
-  width: 10rem;
   background-color: #61616a;
+  padding-top: var(--vertical_padding);
+  padding-bottom: var(--vertical_padding);
+  padding-left: var(--horizontal_padding);
+  padding-right: var(--horizontal_padding);
 }
 
 #buttons {
@@ -158,10 +168,10 @@ body, html {
 input[type=text] {
   font-family: imported_font, sans-serif;
   font-size: 1rem;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-  padding-left: 0.35rem;
-  padding-right: 0.35rem;
+  padding-top: var(--vertical_padding);
+  padding-bottom: var(--vertical_padding);
+  padding-left: var(--horizontal_padding);
+  padding-right: var(--horizontal_padding);
   outline: none;
   border: none;
   background-color: rgb(111, 111, 138);

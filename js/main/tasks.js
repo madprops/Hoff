@@ -163,10 +163,13 @@ App.save_tasks = function () {
 // Show remove tasks dialog
 App.remove_tasks_dialog = function () {
   let buttons = [
-    ["Done Tasks", function (){
+    ["Undo Remove", function () {
+      App.undo_remove()
+    }, false],    
+    ["Remove Done", function (){
       App.remove_done_tasks()
     }, false],
-    ["All Tasks", function () {
+    ["Remove All", function () {
       App.remove_all_tasks()
     }, false],
   ]
@@ -488,7 +491,7 @@ App.backup_tasks = function () {
 }
 
 // Restore tasks from backup
-App.undo = function () {
+App.undo_remove = function () {
   if (App.tasks_backup) {
     App.tasks = App.tasks_backup.slice(0)
     App.tasks_backup = undefined

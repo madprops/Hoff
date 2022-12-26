@@ -6,17 +6,11 @@ App.setup_mouse = function () {
     App.add_task()
   })
 
-  let remove_button = App.el("#remove_button")
-
-  App.ev(remove_button, "click", function () {
+  App.ev(App.el("#remove_button"), "click", function () {
     App.remove_tasks_dialog()
   })
 
-  App.ev(undo_button, "click", function () {
-    App.undo()
-  })
-
-  App.ev(info_button, "click", function () {
+  App.ev(App.el("#info_button"), "click", function () {
     App.show_info()
   })
 
