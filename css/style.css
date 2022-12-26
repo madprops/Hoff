@@ -41,9 +41,8 @@ body, html {
 }
 
 #filter {
-  width: 6rem;
+  width: 5.5rem;
   text-align: center;
-  background-color: #61616a;
   padding-top: var(--vertical_padding);
   padding-bottom: var(--vertical_padding);
   padding-left: var(--horizontal_padding);
