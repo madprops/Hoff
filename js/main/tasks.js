@@ -394,8 +394,8 @@ App.update_input = function (el, reflect = false) {
 
   let id = el.closest(".task").dataset.id
   let task = App.get_task_by_id(id)
-  
-  if (task.text.trim() !== value) {
+
+  if (task && task.text.trim() !== value) {
     task.text = value
     task.date = Date.now()
     let info = App.el(".task_info", el.closest(".task"))
