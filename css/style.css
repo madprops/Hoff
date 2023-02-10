@@ -41,7 +41,6 @@ body, html {
   padding-bottom: var(--vertical_padding);
   padding-left: var(--horizontal_padding);
   padding-right: var(--horizontal_padding);
-  border-radius: var(--border_radius);
 }
 
 #buttons {
@@ -60,7 +59,6 @@ body, html {
   color: white;
   background-color: var(--button_color);
   user-select: none;
-  border-radius: var(--border_radius);
 }
 
 .top_button {
