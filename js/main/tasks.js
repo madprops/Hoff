@@ -26,8 +26,11 @@ App.show_tasks = function () {
 
   for (let i=App.tasks.length-1; i>=0; i--) {
     let task = App.tasks[i]
-    let el = App.create_task_element(task)    
-    container.append(el)
+
+    if (task) {
+      let el = App.create_task_element(task)    
+      container.append(el)
+    }
   }
 
   App.check_first()
@@ -103,6 +106,10 @@ App.create_task_element = function (task) {
 
 // Prepend a task in the container
 App.prepend_task = function (task) {
+  if (!task) {
+    return
+  }
+  
   let container = App.el("#tasks")
   let el = App.create_task_element(task)
   container.prepend(el)
