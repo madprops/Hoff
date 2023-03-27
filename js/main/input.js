@@ -33,12 +33,22 @@ App.setup_mouse = function () {
   let main = App.el("#main")
 
   App.ev(main, "dragover", function (e) {
+    if (e.dataTransfer.types.includes("Files")) {
+      e.preventDefault()
+      return false
+    }
+
     App.on_dragover(e)
     e.preventDefault()
     return false
   })
 
   App.ev(main, "dragend", function (e) {
+    if (e.dataTransfer.types.includes("Files")) {
+      e.preventDefault()
+      return false
+    }
+
     App.on_dragend(e)
   })
 }
