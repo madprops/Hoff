@@ -259,6 +259,12 @@ App.get_done_tasks = function () {
 App.on_dragstart = function (e) {
   App.drag_y = e.clientY
   App.drag_element = e.target.closest(".task")
+
+  if (!App.drag_element) {
+    e.preventDefault()
+    return false
+  }
+
   e.dataTransfer.setDragImage(new Image(), 0, 0)
 }
 
