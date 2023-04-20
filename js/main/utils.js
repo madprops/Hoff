@@ -1,12 +1,12 @@
 // Centralized function to create debouncers
-App.create_debouncer = function (func, delay) {
-  return (function () {
+App.create_debouncer = (func, delay) => {
+  return (() => {
     let timer
 
-    return function (...args) {
+    return (...args) => {
       clearTimeout(timer)
 
-      timer = setTimeout(function () {
+      timer = setTimeout(() => {
         func(...args)
       }, delay)
     }
@@ -14,27 +14,27 @@ App.create_debouncer = function (func, delay) {
 }
 
 // Add an event listener
-App.ev = function (element, action, callback, extra) {
+App.ev = (element, action, callback, extra) => {
   element.addEventListener(action, callback, extra)
 }
 
 // Retrieve an element
-App.el = function (query, root = document) {
+App.el = (query, root = document) => {
   return root.querySelector(query)
 }
 
 // Retrieve a list of elements
-App.els = function (query, root = document) {
+App.els = (query, root = document) => {
   return Array.from(root.querySelectorAll(query))
 }
 
 // Create an element
-App.create = function (type, classes = "", id = "") {
+App.create = (type, classes = ``, id = ``) => {
   let el = document.createElement(type)
 
   if (classes) {
-    let classlist = classes.split(" ").filter(x => x != "")
-  
+    let classlist = classes.split(` `).filter(x => x != ``)
+
     for (let cls of classlist) {
       el.classList.add(cls)
     }
@@ -48,7 +48,7 @@ App.create = function (type, classes = "", id = "") {
 }
 
 // Get local storage object
-App.get_local_storage = function (ls_name) {
+App.get_local_storage = (ls_name) => {
   let obj
 
   if (localStorage[ls_name]) {
@@ -58,7 +58,8 @@ App.get_local_storage = function (ls_name) {
       localStorage.removeItem(ls_name)
       obj = null
     }
-  } else {
+  }
+  else {
     obj = null
   }
 
@@ -66,11 +67,11 @@ App.get_local_storage = function (ls_name) {
 }
 
 // Save local storage object
-App.save_local_storage = function (ls_name, obj) {
+App.save_local_storage = (ls_name, obj) => {
   localStorage.setItem(ls_name, JSON.stringify(obj))
 }
 
 // Get a nice date string
-App.nice_date = function (date = Date.now()) {
-  return dateFormat(date, "ddd - dd/mmm/yy - h:MM tt")
+App.nice_date = (date = Date.now()) => {
+  return dateFormat(date, `ddd - dd/mmm/yy - h:MM tt`)
 }

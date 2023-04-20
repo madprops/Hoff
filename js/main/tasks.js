@@ -1,7 +1,7 @@
-App.ls_tasks = "tasks_v2"
+App.ls_tasks = `tasks_v2`
 
 // Program starts here
-App.init = function () {
+App.init = () => {
   App.tasks = App.get_local_storage(App.ls_tasks) || []
   App.setup_backup()
   App.setup_mouse()
@@ -11,24 +11,24 @@ App.init = function () {
 }
 
 // Focus first input
-App.focus_first = function () {
-  let el = App.els(".task")[0]
-  
+App.focus_first = () => {
+  let el = App.els(`.task`)[0]
+
   if (el) {
     App.focus_input(el)
   }
 }
 
 // Put the tasks in the container
-App.show_tasks = function () {
-  let container = App.el("#tasks")
-  container.innerHTML = ""
+App.show_tasks = () => {
+  let container = App.el(`#tasks`)
+  container.innerHTML = ``
 
   for (let i=App.tasks.length-1; i>=0; i--) {
     let task = App.tasks[i]
 
     if (task) {
-      let el = App.create_task_element(task)    
+      let el = App.create_task_element(task)
       container.append(el)
     }
   }
@@ -37,24 +37,24 @@ App.show_tasks = function () {
 }
 
 // Create a task's element
-App.create_task_element = function (task) {
-  let el = App.create("div", "task", `task_id_${task.id}`) 
-  let top = App.create("div", "task_top")
-  let bottom = App.create("div", "task_bottom")
+App.create_task_element = (task) => {
+  let el = App.create(`div`, `task`, `task_id_${task.id}`)
+  let top = App.create(`div`, `task_top`)
+  let bottom = App.create(`div`, `task_bottom`)
 
   //
-  let info = App.create("div", "task_info")
+  let info = App.create(`div`, `task_info`)
   App.set_info(info, task)
   top.append(info)
   el.append(top)
-  
+
   //
-  let check = App.create("input", "task_check")
-  check.title = "Mark as done"
-  check.type = "checkbox"
+  let check = App.create(`input`, `task_check`)
+  check.title = `Mark as done`
+  check.type = `checkbox`
   check.checked = task.done
 
-  App.ev(check, "change", function () {
+  App.ev(check, `change`, () => {
     task.date = Date.now()
     App.sort_tasks()
     App.save_tasks()
@@ -64,39 +64,39 @@ App.create_task_element = function (task) {
   bottom.append(check)
 
   //
-  let move = App.create("div", "task_move")
-  move.title = "Move task"
-  let move_icon = App.create("object", "icon")
-  move_icon.type = "image/svg+xml"
-  move_icon.data = "img/move.svg"
+  let move = App.create(`div`, `task_move`)
+  move.title = `Move task`
+  let move_icon = App.create(`object`, `icon`)
+  move_icon.type = `image/svg+xml`
+  move_icon.data = `img/move.svg`
   move.draggable = true
 
-  App.ev(move, "dragstart", function (e) {
+  App.ev(move, `dragstart`, (e) => {
     App.on_dragstart(e)
   })
 
   move.append(move_icon)
-  bottom.append(move)   
-  
-  //
-  let text = App.create("input", "task_text")
-  text.type = "text"
-  text.value = task.text
-  text.placeholder = "Write something here"
+  bottom.append(move)
 
-  App.ev(text, "blur", function () {
-    App.on_blur(this)
+  //
+  let text = App.create(`input`, `task_text`)
+  text.type = `text`
+  text.value = task.text
+  text.placeholder = `Write something here`
+
+  App.ev(text, `blur`, () => {
+    App.on_blur(text)
   })
 
-  App.ev(text, "input", function () {
-    App.on_input(this)
+  App.ev(text, `input`, () => {
+    App.on_input(text)
   })
 
   bottom.append(text)
 
   //
-  let remove = App.create("div", "task_remove action")
-  remove.textContent = "x"
+  let remove = App.create(`div`, `task_remove action`)
+  remove.textContent = `x`
   bottom.append(remove)
 
   el.append(bottom)
@@ -105,12 +105,12 @@ App.create_task_element = function (task) {
 }
 
 // Prepend a task in the container
-App.prepend_task = function (task) {
+App.prepend_task = (task) => {
   if (!task) {
     return
   }
-  
-  let container = App.el("#tasks")
+
+  let container = App.el(`#tasks`)
   let el = App.create_task_element(task)
   container.prepend(el)
   el.focus()
@@ -118,19 +118,19 @@ App.prepend_task = function (task) {
 }
 
 // Focus an element's input
-App.focus_input = function (el) {
-  App.el(".task_text", el).focus()
+App.focus_input = (el) => {
+  App.el(`.task_text`, el).focus()
 }
 
 // Add a new task
-App.add_task = function () {
+App.add_task = () => {
   let d = Date.now()
   let s = App.get_random_string(5)
   let id = `${d}_${s}`
 
   let task = {
     id: id,
-    text: "",
+    text: ``,
     date: d,
     done: false,
   }
@@ -141,7 +141,7 @@ App.add_task = function () {
 }
 
 // Get a task by id
-App.get_task_by_id = function (id) {
+App.get_task_by_id = (id) => {
   for (let task of App.tasks) {
     if (id === task.id) {
       return task
@@ -150,8 +150,8 @@ App.get_task_by_id = function (id) {
 }
 
 // Get a task by id
-App.get_task_element_by_id = function (id) {
-  for (let el of App.els(".task")) {
+App.get_task_element_by_id = (id) => {
+  for (let el of App.els(`.task`)) {
     if (id === el.dataset.id) {
       return el
     }
@@ -159,29 +159,29 @@ App.get_task_element_by_id = function (id) {
 }
 
 // Save tasks to local storage
-App.save_tasks = function () {
+App.save_tasks = () => {
   App.save_local_storage(App.ls_tasks, App.tasks)
 }
 
 // Show remove tasks dialog
-App.remove_tasks_dialog = function () {
+App.remove_tasks_dialog = () => {
   let buttons = [
-    ["Undo Remove", function () {
+    [`Undo Remove`, () => {
       App.undo_remove()
-    }, false],    
-    ["Remove Done", function (){
+    }, false],
+    [`Remove Done`, () =>{
       App.remove_done_tasks()
     }, false],
-    ["Remove All", function () {
+    [`Remove All`, () => {
       App.remove_all_tasks()
     }, false],
   ]
 
-  App.show_dialog("Remove Tasks", buttons)
+  App.show_dialog(`Remove Tasks`, buttons)
 }
 
 // Remove tasks that are marked as done
-App.remove_done_tasks = function () {
+App.remove_done_tasks = () => {
   let done = App.get_done_tasks()
 
   if (done.length > 0) {
@@ -193,7 +193,7 @@ App.remove_done_tasks = function () {
 }
 
 // Remove all tasks
-App.remove_all_tasks = function () {
+App.remove_all_tasks = () => {
   if (App.tasks.length > 0) {
     App.backup_tasks()
     App.tasks = []
@@ -204,14 +204,15 @@ App.remove_all_tasks = function () {
 }
 
 // Get a random int number from a range
-App.get_random_int = function (min, max, exclude = undefined) {
+App.get_random_int = (min, max, exclude = undefined) => {
   let num = Math.floor(Math.random() * (max - min + 1) + min)
 
   if (exclude !== undefined) {
     if (num === exclude) {
       if (num + 1 <= max) {
         num = num + 1
-      } else if (num - 1 >= min) {
+      }
+      else if (num - 1 >= min) {
         num = num - 1
       }
     }
@@ -221,10 +222,10 @@ App.get_random_int = function (min, max, exclude = undefined) {
 }
 
 // Get a random string of a certain length
-App.get_random_string = function (n) {
-  let text = ""
+App.get_random_string = (n) => {
+  let text = ``
 
-  let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+  let possible = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`
 
   for (let i = 0; i < n; i++) {
     text += possible[App.get_random_int(0, possible.length - 1)]
@@ -234,7 +235,7 @@ App.get_random_string = function (n) {
 }
 
 // Remove a task
-App.remove_task = function (el) {
+App.remove_task = (el) => {
   App.backup_tasks()
   let id = el.dataset.id
   App.tasks = App.tasks.filter(x => x.id !== id)
@@ -243,7 +244,7 @@ App.remove_task = function (el) {
 }
 
 // Get tasks that are marked as done
-App.get_done_tasks = function () {
+App.get_done_tasks = () => {
   let done = []
 
   for (let task of App.tasks) {
@@ -256,9 +257,9 @@ App.get_done_tasks = function () {
 }
 
 // On dragstart event
-App.on_dragstart = function (e) {
+App.on_dragstart = (e) => {
   App.drag_y = e.clientY
-  App.drag_element = e.target.closest(".task")
+  App.drag_element = e.target.closest(`.task`)
 
   if (!App.drag_element) {
     e.preventDefault()
@@ -269,37 +270,38 @@ App.on_dragstart = function (e) {
 }
 
 // On dragover event
-App.on_dragover = function (e) {
-  if (!e.target.closest(".task")) {
+App.on_dragover = (e) => {
+  if (!e.target.closest(`.task`)) {
     return
   }
 
-  let direction = e.clientY > App.drag_y ? "down" : "up"
-  let el = e.target.closest(".task")
+  let direction = e.clientY > App.drag_y ? `down` : `up`
+  let el = e.target.closest(`.task`)
 
   if (el === App.drag_element) {
     e.preventDefault()
     return false
   }
-  
+
   App.drag_y = e.clientY
 
-  if (direction === "down") {
+  if (direction === `down`) {
     el.after(App.drag_element)
-  } else {
+  }
+  else {
     el.before(App.drag_element)
   }
 }
 
 // On dragend event
-App.on_dragend = function (e) {
+App.on_dragend = (e) => {
   App.reorder_tasks()
 }
 
 // Update tasks array based on element order
-App.reorder_tasks = function () {
+App.reorder_tasks = () => {
   let ids = []
-  let els = App.els(".task")
+  let els = App.els(`.task`)
   els.reverse()
 
   for (let el of els) {
@@ -311,24 +313,25 @@ App.reorder_tasks = function () {
 }
 
 // Show some information
-App.show_info = function () {
-  let s = ""
-  s += "This is a simple TODO list.\n"
-  s += "Tasks are saved in local storage.\n"
-  s += "No network requests are made."
+App.show_info = () => {
+  let s = ``
+  s += `This is a simple TODO list.\n`
+  s += `Tasks are saved in local storage.\n`
+  s += `No network requests are made.`
   App.show_alert(s)
 }
 
 // Clear input or remove task if empty
-App.clear_input = function () {
+App.clear_input = () => {
   let input = App.get_focused_input()
 
   if (input) {
     if (input.value) {
-      input.value = ""
-    } else {
+      input.value = ``
+    }
+    else {
       if (App.tasks.length > 1) {
-        App.remove_task(input.closest(".task"))
+        App.remove_task(input.closest(`.task`))
         App.focus_first()
       }
     }
@@ -336,8 +339,8 @@ App.clear_input = function () {
 }
 
 // Get input that is focused
-App.get_focused_input = function () {
-  for (let input of App.els(".task_text")) {
+App.get_focused_input = () => {
+  for (let input of App.els(`.task_text`)) {
     if (input === document.activeElement) {
       return input
     }
@@ -346,7 +349,7 @@ App.get_focused_input = function () {
 
 // Check if no tasks - Focus first task
 // If no task add one - Always at least 1 task
-App.check_first = function () {
+App.check_first = () => {
   if (App.tasks.length === 0) {
     App.add_task()
   }
@@ -355,16 +358,16 @@ App.check_first = function () {
 }
 
 // Check if first task is empty
-App.first_task_empty = function () {
-  return App.tasks[0].text === ""
+App.first_task_empty = () => {
+  return App.tasks[0].text === ``
 }
 
 // Move up or down to the next input
-App.move_input = function (direction) {
-  let items = [App.el("#filter")].concat(App.els(".task_text"))
+App.move_input = (direction) => {
+  let items = [App.el(`#filter`)].concat(App.els(`.task_text`))
   let waypoint = false
 
-  if (direction === "up") {
+  if (direction === `up`) {
     items.reverse()
   }
 
@@ -381,126 +384,129 @@ App.move_input = function (direction) {
 }
 
 // If no input focused then focus the first one
-App.check_focus = function () {
+App.check_focus = () => {
   if (!App.input_focused() && !App.filter_focused()) {
     App.focus_first()
   }
 }
 
 // On input blur
-App.on_blur = function (el) {
+App.on_blur = (el) => {
   App.update_input(el, true)
 }
 
 // On input event
-App.do_on_input = function (el) {
+App.do_on_input = (el) => {
   App.update_input(el)
 }
 
 // Update input
-App.update_input = function (el, reflect = false) {
+App.update_input = (el, reflect = false) => {
   let value = el.value.trim()
 
   if (reflect) {
     el.value = value
   }
 
-  let id = el.closest(".task").dataset.id
+  let id = el.closest(`.task`).dataset.id
   let task = App.get_task_by_id(id)
 
   if (task && task.text.trim() !== value) {
     task.text = value
     task.date = Date.now()
-    let info = App.el(".task_info", el.closest(".task"))
+    let info = App.el(`.task_info`, el.closest(`.task`))
     App.set_info(info, task)
     App.save_tasks()
   }
 }
 
 // Check if a task input is focused
-App.input_focused = function () {
-  return document.activeElement.classList.contains("task_text")
+App.input_focused = () => {
+  return document.activeElement.classList.contains(`task_text`)
 }
 
 // Check if filter is focused
-App.filter_focused = function () {
-  return document.activeElement === App.el("#filter")
+App.filter_focused = () => {
+  return document.activeElement === App.el(`#filter`)
 }
 
 // Filter tasks
-App.do_filter = function () {
-  let value = App.el("#filter").value.trim().toLowerCase()
-  let words = value.split(" ").filter(x => x !== "")
+App.do_filter = () => {
+  let value = App.el(`#filter`).value.trim().toLowerCase()
+  let words = value.split(` `).filter(x => x !== ``)
 
   for (let task of App.tasks) {
     let el = App.el(`#task_id_${task.id}`)
     let text = task.text.toLowerCase()
-    let info = App.el(".task_info", el).textContent.toLowerCase()
+    let info = App.el(`.task_info`, el).textContent.toLowerCase()
     let match = words.every(x => text.includes(x) || info.includes(x))
-    
+
     if (match) {
-      el.classList.remove("hidden")
-    } else {
-      el.classList.add("hidden")
+      el.classList.remove(`hidden`)
+    }
+    else {
+      el.classList.add(`hidden`)
     }
   }
 }
 
 // Clear the filter
-App.clear_filter = function () {
-  App.el("#filter").value = ""
+App.clear_filter = () => {
+  App.el(`#filter`).value = ``
   App.do_filter()
 }
 
 // Set a task's header info
-App.set_info = function (el, task) {
+App.set_info = (el, task) => {
   if (task.text) {
     el.textContent = App.nice_date(task.date)
-  } else {
-    el.textContent = "Empty Task"
+  }
+  else {
+    el.textContent = `Empty Task`
   }
 }
 
 // Toggle done checkbox
-App.toggle_check = function (e, id) {
-  let check = e.target.closest(".task_check")
+App.toggle_check = (e, id) => {
+  let check = e.target.closest(`.task_check`)
   let task = App.get_task_by_id(id)
   task.done = check.checked
   App.save_tasks()
 }
 
 // Sort tags based on state and date
-App.sort_tasks = function () {
-  App.tasks.sort(function (a, b) {
+App.sort_tasks = () => {
+  App.tasks.sort((a, b) => {
     if (b.done === a.done) {
       return b.date > a.date ? -1 : 1
-    } else {
+    }
+    else {
       return b.done - a.done
     }
   })
 }
 
 // Setup backup
-App.setup_backup = function () {
-  App.lock_backup = App.create_debouncer(function () {
+App.setup_backup = () => {
+  App.lock_backup = App.create_debouncer(() => {
     App.backup_locked = false
   }, 1234)
 }
 
 // Backup tasks
-App.backup_tasks = function () {
+App.backup_tasks = () => {
   if (App.backup_locked) {
     App.lock_backup()
     return
   }
-  
+
   App.tasks_backup = App.tasks.slice(0)
   App.backup_locked = true
   App.lock_backup()
 }
 
 // Restore tasks from backup
-App.undo_remove = function () {
+App.undo_remove = () => {
   if (App.tasks_backup) {
     App.tasks = App.tasks_backup.slice(0)
     App.tasks_backup = undefined
