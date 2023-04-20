@@ -54,7 +54,8 @@ App.get_local_storage = (ls_name) => {
   if (localStorage[ls_name]) {
     try {
       obj = JSON.parse(localStorage.getItem(ls_name))
-    } catch (err) {
+    }
+    catch (err) {
       localStorage.removeItem(ls_name)
       obj = null
     }
