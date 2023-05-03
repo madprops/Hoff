@@ -1,22 +1,22 @@
 // Setup mouse events
 App.setup_mouse = () => {
-  let add_button = App.el(`#add_button`)
+  let add_button = DOM.el(`#add_button`)
 
-  App.ev(add_button, `click`, () => {
+  DOM.ev(add_button, `click`, () => {
     App.add_task()
   })
 
-  App.ev(App.el(`#remove_button`), `click`, () => {
+  DOM.ev(DOM.el(`#remove_button`), `click`, () => {
     App.remove_tasks_dialog()
   })
 
-  App.ev(App.el(`#info_button`), `click`, () => {
+  DOM.ev(DOM.el(`#info_button`), `click`, () => {
     App.show_info()
   })
 
-  let container = App.el(`#tasks`)
+  let container = DOM.el(`#tasks`)
 
-  App.ev(container, `click`, (e) => {
+  DOM.ev(container, `click`, (e) => {
     if (e.target.closest(`.task`)) {
       let el = e.target.closest(`.task`)
       let id = el.dataset.id
@@ -31,9 +31,9 @@ App.setup_mouse = () => {
     }
   })
 
-  let main = App.el(`#main`)
+  let main = DOM.el(`#main`)
 
-  App.ev(main, `dragover`, (e) => {
+  DOM.ev(main, `dragover`, (e) => {
     if (e.dataTransfer.types.includes(`Files`)) {
       e.preventDefault()
       return false
@@ -44,7 +44,7 @@ App.setup_mouse = () => {
     return false
   })
 
-  App.ev(main, `dragend`, (e) => {
+  DOM.ev(main, `dragend`, (e) => {
     if (e.dataTransfer.types.includes(`Files`)) {
       e.preventDefault()
       return false
@@ -64,7 +64,7 @@ App.setup_keyboard = () => {
     App.do_on_input(input)
   }, 500)
 
-  App.ev(document, `keydown`, (e) => {
+  DOM.ev(document, `keydown`, (e) => {
     App.check_focus()
 
     if (e.key === `Enter`) {

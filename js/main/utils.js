@@ -13,40 +13,6 @@ App.create_debouncer = (func, delay) => {
   })()
 }
 
-// Add an event listener
-App.ev = (element, action, callback, extra) => {
-  element.addEventListener(action, callback, extra)
-}
-
-// Retrieve an element
-App.el = (query, root = document) => {
-  return root.querySelector(query)
-}
-
-// Retrieve a list of elements
-App.els = (query, root = document) => {
-  return Array.from(root.querySelectorAll(query))
-}
-
-// Create an element
-App.create = (type, classes = ``, id = ``) => {
-  let el = document.createElement(type)
-
-  if (classes) {
-    let classlist = classes.split(` `).filter(x => x != ``)
-
-    for (let cls of classlist) {
-      el.classList.add(cls)
-    }
-  }
-
-  if (id) {
-    el.id = id
-  }
-
-  return el
-}
-
 // Get local storage object
 App.get_local_storage = (ls_name) => {
   let obj

@@ -1,6 +1,6 @@
 // Get a template
 App.get_template = (id) => {
-  let template = App.el(`#template_${id}`)
+  let template = DOM.el(`#template_${id}`)
 
   if (template) {
     return template.innerHTML.trim()
@@ -12,18 +12,18 @@ App.create_popup = (args) => {
   let p = {}
   p.setup = false
 
-  let popup = App.create(`div`, `popup_main`, `popup_${args.id}`)
-  let container = App.create(`div`, `popup_container`, `popup_container_${args.id}`)
+  let popup = DOM.create(`div`, `popup_main`, `popup_${args.id}`)
+  let container = DOM.create(`div`, `popup_container`, `popup_container_${args.id}`)
   container.innerHTML = App.get_template(args.id)
   popup.append(container)
 
-  App.ev(popup, `click`, (e) => {
+  DOM.ev(popup, `click`, (e) => {
     if (e.target.isConnected && !e.target.closest(`.popup_container`)) {
       App.popups[args.id].hide()
     }
   })
 
-  App.el(`#main`).append(popup)
+  DOM.el(`#main`).append(popup)
   p.element = popup
 
   p.show = () => {
@@ -78,21 +78,21 @@ App.setup_popups = () => {
 
 // Show alert
 App.show_alert = (message) => {
-  App.el(`#alert_message`).textContent = message
+  DOM.el(`#alert_message`).textContent = message
   App.show_popup(`alert`)
 }
 
 // Show dialog with a list of buttons
 App.show_dialog = (message, buttons) => {
-  App.el(`#dialog_message`).textContent = message
-  let btns = App.el(`#dialog_buttons`)
+  DOM.el(`#dialog_message`).textContent = message
+  let btns = DOM.el(`#dialog_buttons`)
   btns.innerHTML = ``
 
   for (let button of buttons) {
-    let btn = App.create(`div`, `button`)
+    let btn = DOM.create(`div`, `button`)
     btn.textContent = button[0]
 
-    App.ev(btn, `click`, () => {
+    DOM.ev(btn, `click`, () => {
       App.hide_popup(`dialog`)
       button[1]()
     })

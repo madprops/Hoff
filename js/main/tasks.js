@@ -12,7 +12,7 @@ App.init = () => {
 
 // Focus first input
 App.focus_first = () => {
-  let el = App.els(`.task`)[0]
+  let el = DOM.els(`.task`)[0]
 
   if (el) {
     App.focus_input(el)
@@ -21,7 +21,7 @@ App.focus_first = () => {
 
 // Put the tasks in the container
 App.show_tasks = () => {
-  let container = App.el(`#tasks`)
+  let container = DOM.el(`#tasks`)
   container.innerHTML = ``
 
   for (let i=App.tasks.length-1; i>=0; i--) {
@@ -38,23 +38,23 @@ App.show_tasks = () => {
 
 // Create a task's element
 App.create_task_element = (task) => {
-  let el = App.create(`div`, `task`, `task_id_${task.id}`)
-  let top = App.create(`div`, `task_top`)
-  let bottom = App.create(`div`, `task_bottom`)
+  let el = DOM.create(`div`, `task`, `task_id_${task.id}`)
+  let top = DOM.create(`div`, `task_top`)
+  let bottom = DOM.create(`div`, `task_bottom`)
 
   //
-  let info = App.create(`div`, `task_info`)
+  let info = DOM.create(`div`, `task_info`)
   App.set_info(info, task)
   top.append(info)
   el.append(top)
 
   //
-  let check = App.create(`input`, `task_check`)
+  let check = DOM.create(`input`, `task_check`)
   check.title = `Mark as done`
   check.type = `checkbox`
   check.checked = task.done
 
-  App.ev(check, `change`, () => {
+  DOM.ev(check, `change`, () => {
     task.date = Date.now()
     App.sort_tasks()
     App.save_tasks()
@@ -64,14 +64,14 @@ App.create_task_element = (task) => {
   bottom.append(check)
 
   //
-  let move = App.create(`div`, `task_move`)
+  let move = DOM.create(`div`, `task_move`)
   move.title = `Move task`
-  let move_icon = App.create(`object`, `icon`)
+  let move_icon = DOM.create(`object`, `icon`)
   move_icon.type = `image/svg+xml`
   move_icon.data = `img/move.svg`
   move.draggable = true
 
-  App.ev(move, `dragstart`, (e) => {
+  DOM.ev(move, `dragstart`, (e) => {
     App.on_dragstart(e)
   })
 
@@ -79,23 +79,23 @@ App.create_task_element = (task) => {
   bottom.append(move)
 
   //
-  let text = App.create(`input`, `task_text`)
+  let text = DOM.create(`input`, `task_text`)
   text.type = `text`
   text.value = task.text
   text.placeholder = `Write something here`
 
-  App.ev(text, `blur`, () => {
+  DOM.ev(text, `blur`, () => {
     App.on_blur(text)
   })
 
-  App.ev(text, `input`, () => {
+  DOM.ev(text, `input`, () => {
     App.on_input(text)
   })
 
   bottom.append(text)
 
   //
-  let remove = App.create(`div`, `task_remove action`)
+  let remove = DOM.create(`div`, `task_remove action`)
   remove.textContent = `x`
   bottom.append(remove)
 
@@ -110,7 +110,7 @@ App.prepend_task = (task) => {
     return
   }
 
-  let container = App.el(`#tasks`)
+  let container = DOM.el(`#tasks`)
   let el = App.create_task_element(task)
   container.prepend(el)
   el.focus()
@@ -119,7 +119,7 @@ App.prepend_task = (task) => {
 
 // Focus an element's input
 App.focus_input = (el) => {
-  App.el(`.task_text`, el).focus()
+  DOM.el(`.task_text`, el).focus()
 }
 
 // Add a new task
@@ -151,7 +151,7 @@ App.get_task_by_id = (id) => {
 
 // Get a task by id
 App.get_task_element_by_id = (id) => {
-  for (let el of App.els(`.task`)) {
+  for (let el of DOM.els(`.task`)) {
     if (id === el.dataset.id) {
       return el
     }
@@ -301,7 +301,7 @@ App.on_dragend = (e) => {
 // Update tasks array based on element order
 App.reorder_tasks = () => {
   let ids = []
-  let els = App.els(`.task`)
+  let els = DOM.els(`.task`)
   els.reverse()
 
   for (let el of els) {
@@ -340,7 +340,7 @@ App.clear_input = () => {
 
 // Get input that is focused
 App.get_focused_input = () => {
-  for (let input of App.els(`.task_text`)) {
+  for (let input of DOM.els(`.task_text`)) {
     if (input === document.activeElement) {
       return input
     }
@@ -364,7 +364,7 @@ App.first_task_empty = () => {
 
 // Move up or down to the next input
 App.move_input = (direction) => {
-  let items = [App.el(`#filter`)].concat(App.els(`.task_text`))
+  let items = [DOM.el(`#filter`)].concat(DOM.els(`.task_text`))
   let waypoint = false
 
   if (direction === `up`) {
@@ -414,7 +414,7 @@ App.update_input = (el, reflect = false) => {
   if (task && task.text.trim() !== value) {
     task.text = value
     task.date = Date.now()
-    let info = App.el(`.task_info`, el.closest(`.task`))
+    let info = DOM.el(`.task_info`, el.closest(`.task`))
     App.set_info(info, task)
     App.save_tasks()
   }
@@ -427,18 +427,18 @@ App.input_focused = () => {
 
 // Check if filter is focused
 App.filter_focused = () => {
-  return document.activeElement === App.el(`#filter`)
+  return document.activeElement === DOM.el(`#filter`)
 }
 
 // Filter tasks
 App.do_filter = () => {
-  let value = App.el(`#filter`).value.trim().toLowerCase()
+  let value = DOM.el(`#filter`).value.trim().toLowerCase()
   let words = value.split(` `).filter(x => x !== ``)
 
   for (let task of App.tasks) {
-    let el = App.el(`#task_id_${task.id}`)
+    let el = DOM.el(`#task_id_${task.id}`)
     let text = task.text.toLowerCase()
-    let info = App.el(`.task_info`, el).textContent.toLowerCase()
+    let info = DOM.el(`.task_info`, el).textContent.toLowerCase()
     let match = words.every(x => text.includes(x) || info.includes(x))
 
     if (match) {
@@ -452,7 +452,7 @@ App.do_filter = () => {
 
 // Clear the filter
 App.clear_filter = () => {
-  App.el(`#filter`).value = ``
+  DOM.el(`#filter`).value = ``
   App.do_filter()
 }
 
