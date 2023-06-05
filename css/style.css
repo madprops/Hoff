@@ -8,16 +8,11 @@
   --border_radius: 25px;
 }
 
-@font-face {
-	font-family: imported_font;
-	src: url(fonts/Roboto-Regular.ttf);
-}
-
 body, html {
   background-color: var(--background_color);
   color: var(--text_color);
   font-size: 17px;
-  font-family: imported_font, sans-serif;
+  font-family: sans-serif;
 }
 
 #main {
@@ -160,7 +155,7 @@ body, html {
 }
 
 input[type=text] {
-  font-family: imported_font, sans-serif;
+  font-family: sans-serif;
   font-size: 1rem;
   padding-top: var(--vertical_padding);
   padding-bottom: var(--vertical_padding);
