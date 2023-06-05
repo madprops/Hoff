@@ -235,3 +235,7 @@ object {
 .action:hover {
   text-shadow: 0 0 1rem currentColor;
 }
+
+.important {
+  border: 2px solid rgb(127, 207, 255) !important;
+}

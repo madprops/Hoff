@@ -30,6 +30,7 @@ App.show_tasks = () => {
     if (task) {
       let el = App.create_task_element(task)
       container.append(el)
+      App.check_important(task)
     }
   }
 
@@ -416,6 +417,7 @@ App.update_input = (el, reflect = false) => {
     task.date = Date.now()
     let info = DOM.el(`.task_info`, el.closest(`.task`))
     App.set_info(info, task)
+    App.check_important(task)
     App.save_tasks()
   }
 }
@@ -512,5 +514,25 @@ App.undo_remove = () => {
     App.tasks_backup = undefined
     App.save_tasks()
     App.show_tasks()
+  }
+}
+
+App.check_important = (task) => {
+  let important = false
+  let text = DOM.el(`.task_text`, DOM.el(`#task_id_${task.id}`))
+
+  if (text.value.trim().endsWith(`!`)) {
+    let check = DOM.el(`.task_check`, DOM.el(`#task_id_${task.id}`))
+
+    if (!check.checked) {
+      important = true
+    }
+  }
+
+  if (important) {
+    text.classList.add(`important`)
+  }
+  else {
+    text.classList.remove(`important`)
   }
 }
