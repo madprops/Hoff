@@ -58,8 +58,8 @@ App.create_task_element = (task) => {
   DOM.ev(check, `change`, () => {
     task.date = Date.now()
     App.sort_tasks()
+    App.reorder_tasks()
     App.save_tasks()
-    App.show_tasks()
   })
 
   bottom.append(check)
@@ -87,6 +87,7 @@ App.create_task_element = (task) => {
 
   el.append(bottom)
   el.dataset.id = task.id
+  task.element = el
   return el
 }
 
@@ -240,20 +241,6 @@ App.get_done_tasks = () => {
   }
 
   return done
-}
-
-// Update tasks array based on element order
-App.reorder_tasks = () => {
-  let ids = []
-  let els = DOM.els(`.task`)
-  els.reverse()
-
-  for (let el of els) {
-    ids.push(el.dataset.id)
-  }
-
-  App.tasks.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
-  App.save_tasks()
 }
 
 // Show some information
@@ -429,6 +416,17 @@ App.sort_tasks = () => {
       return b.done - a.done
     }
   })
+}
+
+// Reorder tasks
+App.reorder_tasks = () => {
+  let fragment = document.createDocumentFragment()
+
+  for (let task of App.tasks.slice(0).reverse()) {
+    fragment.appendChild(task.element)
+  }
+
+  DOM.el(`#tasks`).appendChild(fragment)
 }
 
 // Setup backup
