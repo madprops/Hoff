@@ -32,26 +32,6 @@ App.setup_mouse = () => {
   })
 
   let main = DOM.el(`#main`)
-
-  DOM.ev(main, `dragover`, (e) => {
-    if (e.dataTransfer.types.includes(`Files`)) {
-      e.preventDefault()
-      return false
-    }
-
-    App.on_dragover(e)
-    e.preventDefault()
-    return false
-  })
-
-  DOM.ev(main, `dragend`, (e) => {
-    if (e.dataTransfer.types.includes(`Files`)) {
-      e.preventDefault()
-      return false
-    }
-
-    App.on_dragend(e)
-  })
 }
 
 // Setup keyboard events

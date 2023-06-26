@@ -65,21 +65,6 @@ App.create_task_element = (task) => {
   bottom.append(check)
 
   //
-  let move = DOM.create(`div`, `task_move`)
-  move.title = `Move task`
-  let move_icon = DOM.create(`object`, `icon`)
-  move_icon.type = `image/svg+xml`
-  move_icon.data = `img/move.svg`
-  move.draggable = true
-
-  DOM.ev(move, `dragstart`, (e) => {
-    App.on_dragstart(e)
-  })
-
-  move.append(move_icon)
-  bottom.append(move)
-
-  //
   let text = DOM.create(`input`, `task_text`)
   text.type = `text`
   text.value = task.text
@@ -255,48 +240,6 @@ App.get_done_tasks = () => {
   }
 
   return done
-}
-
-// On dragstart event
-App.on_dragstart = (e) => {
-  App.drag_y = e.clientY
-  App.drag_element = e.target.closest(`.task`)
-
-  if (!App.drag_element) {
-    e.preventDefault()
-    return false
-  }
-
-  e.dataTransfer.setDragImage(new Image(), 0, 0)
-}
-
-// On dragover event
-App.on_dragover = (e) => {
-  if (!e.target.closest(`.task`)) {
-    return
-  }
-
-  let direction = e.clientY > App.drag_y ? `down` : `up`
-  let el = e.target.closest(`.task`)
-
-  if (el === App.drag_element) {
-    e.preventDefault()
-    return false
-  }
-
-  App.drag_y = e.clientY
-
-  if (direction === `down`) {
-    el.after(App.drag_element)
-  }
-  else {
-    el.before(App.drag_element)
-  }
-}
-
-// On dragend event
-App.on_dragend = (e) => {
-  App.reorder_tasks()
 }
 
 // Update tasks array based on element order
