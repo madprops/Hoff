@@ -58,9 +58,6 @@ App.setup_keyboard = () => {
       else if (App.filter_focused()) {
         App.clear_filter()
       }
-      else if (App.input_focused()) {
-        App.clear_input()
-      }
 
       e.preventDefault()
     }
