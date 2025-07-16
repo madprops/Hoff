@@ -38,7 +38,7 @@ App.setup_mouse = () => {
 App.setup_keyboard = () => {
   App.filter = App.create_debouncer(() => {
     App.do_filter()
-  }, 250)
+  }, 120)
 
   App.on_input = App.create_debouncer((input) => {
     App.do_on_input(input)
