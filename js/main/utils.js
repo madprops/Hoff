@@ -42,3 +42,9 @@ App.save_local_storage = (ls_name, obj) => {
 App.nice_date = (date = Date.now()) => {
   return dateFormat(date, `ddd - dd/mmm/yy - h:MM tt`)
 }
+
+// Print to the console
+App.info = (s) => {
+  // eslint-disable-next-line no-console
+  console.info(s)
+}

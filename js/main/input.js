@@ -80,10 +80,8 @@ App.setup_keyboard = () => {
 
       e.preventDefault()
     }
-    else {
-      if (App.filter_focused()) {
-        App.filter()
-      }
+    else if (App.filter_focused()) {
+      App.filter()
     }
   })
 }

@@ -24,7 +24,7 @@ App.show_tasks = () => {
   let container = DOM.el(`#tasks`)
   container.innerHTML = ``
 
-  for (let i=App.tasks.length-1; i>=0; i--) {
+  for (let i = App.tasks.length - 1; i >= 0; i--) {
     let task = App.tasks[i]
 
     if (task) {
@@ -110,14 +110,14 @@ App.focus_input = (el) => {
 }
 
 // Add a new task
-App.add_task = () => {
+App.add_task = (text = ``) => {
   let d = Date.now()
   let s = App.get_random_string(5)
   let id = `${d}_${s}`
 
   let task = {
-    id: id,
-    text: ``,
+    id,
+    text,
     date: d,
     done: false,
   }
@@ -156,7 +156,7 @@ App.remove_tasks_dialog = () => {
     [`Undo Remove`, () => {
       App.undo_remove()
     }, false],
-    [`Remove Done`, () =>{
+    [`Remove Done`, () => {
       App.remove_done_tasks()
     }, false],
     [`Remove All`, () => {
@@ -260,11 +260,9 @@ App.clear_input = () => {
     if (input.value) {
       input.value = ``
     }
-    else {
-      if (App.tasks.length > 1) {
-        App.remove_task(input.closest(`.task`))
-        App.focus_first()
-      }
+    else if (App.tasks.length > 1) {
+      App.remove_task(input.closest(`.task`))
+      App.focus_first()
     }
   }
 }
@@ -282,7 +280,11 @@ App.get_focused_input = () => {
 // If no task add one - Always at least 1 task
 App.check_first = () => {
   if (App.tasks.length === 0) {
-    App.add_task()
+    App.add_task(`You can also use the filter`)
+    App.add_task(`Meant for shortform keywords`)
+    App.add_task(`Add and remove tasks anytime`)
+    App.add_task(`Check the buttons above`)
+    App.add_task(`Welcome To Hoff`)
   }
 
   App.focus_first()
@@ -342,7 +344,7 @@ App.update_input = (el, reflect = false) => {
   let id = el.closest(`.task`).dataset.id
   let task = App.get_task_by_id(id)
 
-  if (task && task.text.trim() !== value) {
+  if (task && (task.text.trim() !== value)) {
     task.text = value
     task.date = Date.now()
     let info = DOM.el(`.task_info`, el.closest(`.task`))
@@ -412,9 +414,8 @@ App.sort_tasks = () => {
     if (b.done === a.done) {
       return b.date > a.date ? -1 : 1
     }
-    else {
-      return b.done - a.done
-    }
+
+    return b.done - a.done
   })
 }
 

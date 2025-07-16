@@ -30,7 +30,7 @@ App.create_popup = (args) => {
     if (args.setup && !p.setup) {
       args.setup()
       p.setup = true
-      console.info(`${args.id} popup setup`)
+      App.info(`${args.id} popup setup`)
     }
 
     p.element.style.display = `flex`
@@ -68,11 +68,11 @@ App.setup_popups = () => {
   App.popups = {}
 
   App.create_popup({
-    id: `alert`
+    id: `alert`,
   })
 
   App.create_popup({
-    id: `dialog`
+    id: `dialog`,
   })
 }
 
