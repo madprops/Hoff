@@ -8,6 +8,7 @@ App.init = () => {
   App.setup_keyboard()
   App.setup_popups()
   App.show_tasks()
+  App.start_timeago()
 }
 
 // Focus first input
@@ -56,7 +57,7 @@ App.create_task_element = (task) => {
   check.checked = task.done
 
   DOM.ev(check, `change`, () => {
-    task.date = Date.now()
+    App.update_date(task)
     App.sort_tasks()
     App.reorder_tasks()
     App.save_tasks()
@@ -346,7 +347,7 @@ App.update_input = (el, reflect = false) => {
 
   if (task && (task.text.trim() !== value)) {
     task.text = value
-    task.date = Date.now()
+    App.update_date(task)
     let info = DOM.el(`.task_info`, el.closest(`.task`))
     App.set_info(info, task)
     App.check_important(task)
@@ -393,7 +394,7 @@ App.clear_filter = () => {
 // Set a task's header info
 App.set_info = (el, task) => {
   if (task.text) {
-    el.textContent = App.nice_date(task.date)
+    el.textContent = App.timeago(task.date)
   }
   else {
     el.textContent = `Empty Task`
@@ -479,4 +480,19 @@ App.check_important = (task) => {
   else {
     text.classList.remove(`important`)
   }
+}
+
+App.start_timeago = () => {
+  setInterval(() => {
+    for (let task of App.tasks) {
+      let info = DOM.el(`.task_info`, DOM.el(`#task_id_${task.id}`))
+      App.set_info(info, task)
+    }
+  }, App.MINUTE)
+}
+
+App.update_date = (task) => {
+  task.date = Date.now()
+  let info = DOM.el(`.task_info`, DOM.el(`#task_id_${task.id}`))
+  info.title = App.nice_date(task.date)
 }
