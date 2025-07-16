@@ -3,6 +3,7 @@ App.name = `Hoff`
 
 // Program starts here
 App.init = () => {
+  App.first_check = true
   App.tasks = App.get_local_storage(App.ls_tasks) || []
   App.setup_backup()
   App.setup_mouse()
@@ -288,13 +289,19 @@ App.get_focused_input = () => {
 // If no task add one - Always at least 1 task
 App.check_first = () => {
   if (App.tasks.length === 0) {
-    App.add_task(`You can also use the filter`)
-    App.add_task(`Meant for shortform keywords`)
-    App.add_task(`Add and remove tasks anytime`)
-    App.add_task(`Check the buttons above`)
-    App.add_task(`Welcome To ${App.name}`)
+    if (App.first_check) {
+      App.add_task(`You can also use the filter`)
+      App.add_task(`Meant for shortform keywords`)
+      App.add_task(`Add and remove tasks anytime`)
+      App.add_task(`Check the buttons above`)
+      App.add_task(`Welcome To ${App.name}`)
+    }
+    else {
+      App.add_task()
+    }
   }
 
+  App.first_check = false
   App.focus_first()
 }
 
