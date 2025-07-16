@@ -355,6 +355,7 @@ App.update_input = (el, reflect = false) => {
   if (task && (task.text.trim() !== value)) {
     task.text = value
     App.update_date(task)
+    App.update_title()
     let info = DOM.el(`.task_info`, el.closest(`.task`))
     App.set_info(info, task)
     App.check_important(task)
@@ -506,7 +507,7 @@ App.update = () => {
 }
 
 App.update_title = () => {
-  let pending = App.tasks.filter(x => !x.done).length
+  let pending = App.tasks.filter(x => !x.done && x.text).length
   document.title = `${App.name} (${pending})`
 }
 
