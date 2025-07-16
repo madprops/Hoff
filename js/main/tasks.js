@@ -165,19 +165,19 @@ App.save_tasks = () => {
 // Show remove tasks dialog
 App.remove_tasks_dialog = () => {
   let buttons = [
-    [`Undo Remove`, () => {
+    [`Undo`, () => {
       App.undo_remove()
     }, false],
-    [`Remove Done`, () => {
+    [`Done`, () => {
       App.remove_done_tasks()
     }, false],
-    [`Remove Empty`, () => {
-      App.remove_empty_tasks()
-    }, false],
-    [`Remove Active`, () => {
+    [`Active`, () => {
       App.remove_active_tasks()
     }, false],
-    [`Remove All`, () => {
+    [`Empty`, () => {
+      App.remove_empty_tasks()
+    }, false],
+    [`All`, () => {
       App.remove_all_tasks()
     }, false],
   ]
