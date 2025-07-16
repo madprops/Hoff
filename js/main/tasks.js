@@ -593,9 +593,6 @@ App.update_date = (task) => {
 // Bump a task to the top
 App.bump_task = (el) => {
   let id = el.dataset.id
-  let index = App.tasks.findIndex(x => x.id === id)
-  let item = App.tasks.splice(index, 1)[0]
-  App.tasks.push(item)
   let task = App.get_task_by_id(id)
   App.update_date(task)
   App.sort_tasks()
