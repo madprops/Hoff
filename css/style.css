@@ -2,7 +2,7 @@
   --background_color: rgb(71, 74, 83);
   --text_color: white;
   --button_color: rgb(91, 105, 148);
-  --vertical_padding: 0.3rem;
+  --vertical_padding: 0.28rem;
   --horizontal_padding: 0.45rem;
   --top_item_width: 5rem;
   --border_radius: 25px;
@@ -84,6 +84,7 @@ body, html {
   display: flex;
   flex-direction: column;
   margin-top: 1.5rem;
+  margin-bottom: 3rem;
   gap: 1.35rem;
 }
 
