@@ -126,6 +126,7 @@ App.add_task = (text = ``) => {
 
   App.tasks.push(task)
   App.prepend_task(task)
+  App.update_title()
   App.save_tasks()
 }
 
@@ -178,6 +179,7 @@ App.remove_done_tasks = () => {
     App.tasks = App.tasks.filter(x => !x.done)
     App.save_tasks()
     App.show_tasks()
+    App.update_title()
   }
 }
 
@@ -189,6 +191,7 @@ App.remove_all_tasks = () => {
     App.add_task()
     App.save_tasks()
     App.show_tasks()
+    App.update_title()
   }
 }
 
@@ -458,6 +461,7 @@ App.undo_remove = () => {
     App.tasks_backup = undefined
     App.save_tasks()
     App.show_tasks()
+    App.update_title()
   }
 }
 
