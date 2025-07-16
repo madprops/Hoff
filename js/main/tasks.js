@@ -9,6 +9,7 @@ App.init = () => {
   App.setup_popups()
   App.show_tasks()
   App.start_update()
+  App.update_title()
 }
 
 // Focus first input
@@ -232,6 +233,7 @@ App.remove_task = (el) => {
   let id = el.dataset.id
   App.tasks = App.tasks.filter(x => x.id !== id)
   el.remove()
+  App.update_title()
   App.save_tasks()
 }
 
@@ -496,11 +498,6 @@ App.start_update = () => {
 }
 
 App.update = () => {
-  App.update_timeago()
-  App.update_title()
-}
-
-App.update_timeago = () => {
   for (let task of App.tasks) {
     let info = DOM.el(`.task_info`, DOM.el(`#task_id_${task.id}`))
     App.set_info(info, task)
