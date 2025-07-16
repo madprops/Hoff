@@ -528,12 +528,15 @@ App.update_date = (task) => {
   info.title = App.nice_date(task.date)
 }
 
-App.bump_task = (task) => {
-  let id = task.dataset.id
+App.bump_task = (el) => {
+  let id = el.dataset.id
   let index = App.tasks.findIndex(x => x.id === id)
   let item = App.tasks.splice(index, 1)[0]
   App.tasks.push(item)
-  App.save_tasks()
-  App.show_tasks()
+  let task = App.get_task_by_id(id)
+  App.update_date(task)
+  App.sort_tasks()
+  App.reorder_tasks()
   App.update_title()
+  App.save_tasks()
 }
