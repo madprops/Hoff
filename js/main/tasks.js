@@ -1,4 +1,5 @@
 App.ls_tasks = `tasks_v2`
+App.name = `Hoff`
 
 // Program starts here
 App.init = () => {
@@ -291,7 +292,7 @@ App.check_first = () => {
     App.add_task(`Meant for shortform keywords`)
     App.add_task(`Add and remove tasks anytime`)
     App.add_task(`Check the buttons above`)
-    App.add_task(`Welcome To Hoff`)
+    App.add_task(`Welcome To ${App.name}`)
   }
 
   App.focus_first()
@@ -506,7 +507,7 @@ App.update = () => {
 
 App.update_title = () => {
   let pending = App.tasks.filter(x => !x.done).length
-  document.title = `Hoff - (${pending})`
+  document.title = `${App.name} (${pending})`
 }
 
 App.update_date = (task) => {
