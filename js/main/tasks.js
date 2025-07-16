@@ -86,9 +86,13 @@ App.create_task_element = (task) => {
   bottom.append(text)
 
   //
-  let remove = DOM.create(`div`, `task_remove action`)
+  let remove = DOM.create(`div`, `task_remove task_button action`)
   remove.textContent = `x`
   bottom.append(remove)
+
+  let bump = DOM.create(`div`, `task_bump task_button action`)
+  bump.textContent = `↑`
+  bottom.append(bump)
 
   el.append(bottom)
   el.dataset.id = task.id
@@ -522,4 +526,14 @@ App.update_date = (task) => {
   task.date = Date.now()
   let info = DOM.el(`.task_info`, DOM.el(`#task_id_${task.id}`))
   info.title = App.nice_date(task.date)
+}
+
+App.bump_task = (task) => {
+  let id = task.dataset.id
+  let index = App.tasks.findIndex(x => x.id === id)
+  let item = App.tasks.splice(index, 1)[0]
+  App.tasks.push(item)
+  App.save_tasks()
+  App.show_tasks()
+  App.update_title()
 }

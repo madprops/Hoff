@@ -28,6 +28,9 @@ App.setup_mouse = () => {
         App.remove_task(el)
         App.check_first()
       }
+      else if (e.target.closest(`.task_bump`)) {
+        App.bump_task(el)
+      }
     }
   })
 
