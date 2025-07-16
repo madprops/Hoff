@@ -8,7 +8,7 @@ App.init = () => {
   App.setup_keyboard()
   App.setup_popups()
   App.show_tasks()
-  App.start_timeago()
+  App.start_update()
 }
 
 // Focus first input
@@ -58,6 +58,7 @@ App.create_task_element = (task) => {
 
   DOM.ev(check, `change`, () => {
     App.update_date(task)
+    App.update_title()
     App.sort_tasks()
     App.reorder_tasks()
     App.save_tasks()
@@ -482,13 +483,29 @@ App.check_important = (task) => {
   }
 }
 
-App.start_timeago = () => {
+App.start_update = () => {
+  App.update()
+
   setInterval(() => {
-    for (let task of App.tasks) {
-      let info = DOM.el(`.task_info`, DOM.el(`#task_id_${task.id}`))
-      App.set_info(info, task)
-    }
+    App.update()
   }, App.MINUTE)
+}
+
+App.update = () => {
+  App.update_timeago()
+  App.update_title()
+}
+
+App.update_timeago = () => {
+  for (let task of App.tasks) {
+    let info = DOM.el(`.task_info`, DOM.el(`#task_id_${task.id}`))
+    App.set_info(info, task)
+  }
+}
+
+App.update_title = () => {
+  let pending = App.tasks.filter(x => !x.done).length
+  document.title = `Hoff - (${pending})`
 }
 
 App.update_date = (task) => {
