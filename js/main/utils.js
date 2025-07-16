@@ -100,7 +100,7 @@ App.timeago = (date) => {
 
   let w = App.plural(n, m[0], m[1])
 
-  if ((n <= 5) && (w === `seconds`)) {
+  if (w.startsWith(`second`)) {
     return `Just Now`
   }
 
