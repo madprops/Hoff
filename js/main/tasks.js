@@ -171,6 +171,12 @@ App.remove_tasks_dialog = () => {
     [`Remove Done`, () => {
       App.remove_done_tasks()
     }, false],
+    [`Remove Empty`, () => {
+      App.remove_empty_tasks()
+    }, false],
+    [`Remove Active`, () => {
+      App.remove_active_tasks()
+    }, false],
     [`Remove All`, () => {
       App.remove_all_tasks()
     }, false],
@@ -184,24 +190,42 @@ App.remove_done_tasks = () => {
   let done = App.get_done_tasks()
 
   if (done.length > 0) {
-    App.backup_tasks()
-    App.tasks = App.tasks.filter(x => !x.done)
-    App.save_tasks()
-    App.show_tasks()
-    App.update_title()
+    App.do_tasks_remove(done)
+  }
+}
+
+// Remove tasks that are empty
+App.remove_empty_tasks = () => {
+  let empty = App.get_empty_tasks()
+
+  if (empty.length > 0) {
+    App.do_tasks_remove(empty)
+  }
+}
+
+// Remove tasks that are active
+App.remove_active_tasks = () => {
+  let active = App.get_active_tasks()
+
+  if (active.length > 0) {
+    App.do_tasks_remove(active)
   }
 }
 
 // Remove all tasks
 App.remove_all_tasks = () => {
   if (App.tasks.length > 0) {
-    App.backup_tasks()
-    App.tasks = []
-    App.add_task()
-    App.save_tasks()
-    App.show_tasks()
-    App.update_title()
+    App.do_tasks_remove(App.tasks.slice(0))
   }
+}
+
+// Do task remove
+App.do_tasks_remove = (tasks) => {
+  App.backup_tasks()
+  App.tasks = App.tasks.filter(x => !tasks.includes(x))
+  App.save_tasks()
+  App.show_tasks()
+  App.update_title()
 }
 
 // Get a random int number from a range
@@ -256,6 +280,37 @@ App.get_done_tasks = () => {
   }
 
   return done
+}
+
+// Get tasks that are empty
+App.get_empty_tasks = () => {
+  let empty = []
+
+  for (let task of App.tasks) {
+    if (!task.text.trim()) {
+      empty.push(task)
+    }
+  }
+
+  return empty
+}
+
+// Get tasks that are active
+App.get_active_tasks = () => {
+  let active = []
+
+  for (let task of App.tasks) {
+    if (App.task_is_active(task)) {
+      active.push(task)
+    }
+  }
+
+  return active
+}
+
+// Check if a task is active
+App.task_is_active = (task) => {
+  return !task.done && task.text.trim()
 }
 
 // Show some information
@@ -482,6 +537,7 @@ App.undo_remove = () => {
   }
 }
 
+// Check if a task is important
 App.check_important = (task) => {
   let important = false
   let text = DOM.el(`.task_text`, DOM.el(`#task_id_${task.id}`))
@@ -504,6 +560,7 @@ App.check_important = (task) => {
   }
 }
 
+// Start the update loop
 App.start_update = () => {
   App.update()
 
@@ -512,6 +569,7 @@ App.start_update = () => {
   }, App.MINUTE)
 }
 
+// Do the update action
 App.update = () => {
   for (let task of App.tasks) {
     let info = DOM.el(`.task_info`, DOM.el(`#task_id_${task.id}`))
@@ -519,17 +577,20 @@ App.update = () => {
   }
 }
 
+// Update the document title
 App.update_title = () => {
-  let pending = App.tasks.filter(x => !x.done && x.text).length
+  let pending = App.tasks.filter(x => App.task_is_active(x)).length
   document.title = `${App.name} (${pending})`
 }
 
+// Update the date of a task
 App.update_date = (task) => {
   task.date = Date.now()
   let info = DOM.el(`.task_info`, DOM.el(`#task_id_${task.id}`))
   info.title = App.nice_date(task.date)
 }
 
+// Bump a task to the top
 App.bump_task = (el) => {
   let id = el.dataset.id
   let index = App.tasks.findIndex(x => x.id === id)
