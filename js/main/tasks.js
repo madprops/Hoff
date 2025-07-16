@@ -539,6 +539,7 @@ App.bump_task = (el) => {
   App.update_date(task)
   App.sort_tasks()
   App.reorder_tasks()
+  App.update()
   App.update_title()
   App.save_tasks()
 }
