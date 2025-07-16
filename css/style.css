@@ -6,6 +6,8 @@
   --horizontal_padding: 0.45rem;
   --top_item_width: 5rem;
   --border_radius: 25px;
+  --close_color_1: rgb(184, 184, 184);
+  --close_color_2: rgb(228, 228, 228);
 }
 
 body, html {
@@ -114,6 +116,19 @@ body, html {
 .task_remove {
   font-size: 1.1rem;
   user-select: none;
+  width: 2rem;
+  height: 1.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: 2px solid var(--close_color_1);
+  color: var(--close_color_1);
+  font-family: monospace;
+}
+
+.task_remove:hover {
+  outline: 2px solid var(--close_color_2);
+  color: var(--close_color_2);
 }
 
 .task_move {
