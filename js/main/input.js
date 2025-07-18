@@ -33,8 +33,6 @@ App.setup_mouse = () => {
       }
     }
   })
-
-  let main = DOM.el(`#main`)
 }
 
 // Setup keyboard events
