@@ -120,7 +120,7 @@ body, html {
   width: 2rem;
   height: 1.7rem;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   outline: 2px solid var(--close_color_1);
   color: var(--close_color_1);
