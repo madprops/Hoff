@@ -84,18 +84,20 @@ App.create_task_element = (task) => {
   })
 
   bottom.append(text)
+  let buttons = DOM.create(`div`, `task_buttons`)
 
   //
   let remove = DOM.create(`div`, `task_remove task_button action`)
   remove.textContent = `x`
   remove.title = `Remove Task`
-  bottom.append(remove)
+  buttons.append(remove)
 
   let bump = DOM.create(`div`, `task_bump task_button action`)
   bump.textContent = `↑`
   bump.title = `Bump Task`
-  bottom.append(bump)
+  buttons.append(bump)
 
+  bottom.append(buttons)
   el.append(bottom)
   el.dataset.id = task.id
   task.element = el
